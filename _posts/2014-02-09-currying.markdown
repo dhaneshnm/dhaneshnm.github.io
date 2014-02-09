@@ -49,4 +49,4 @@ Now you can see that double is nothing but multiply called with second argument 
 (define double ( curry-multiply 2))
 (define half  ( curry-multiply .5))
 {% endhighlight %}
- And so on.
+
