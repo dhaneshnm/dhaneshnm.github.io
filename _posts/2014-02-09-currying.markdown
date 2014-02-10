@@ -21,7 +21,7 @@ Now let us write a scheme function that multiplies two numbers.
 {% highlight lisp %}
 (define multiply
        (lambda (x y)
-        (* x y))
+        (* x y)))
 {% endhighlight %}
 
 
