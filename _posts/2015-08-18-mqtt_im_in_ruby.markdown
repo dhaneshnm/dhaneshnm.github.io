@@ -2,7 +2,7 @@
 layout: post
 title:  "How to build an IM client in ruby and MQTT"
 date:   2015-08-18 17:50:54
-categories: ruby, mqtt
+categories: ruby
 ---
 
 What are we building today?
