@@ -41,19 +41,19 @@ gem install mqtt
 
 *	Inside the same directory create a file called Client1.rb and paste the content of the below gist in to it. Now change 'Client' in to 'Client2' and vice versa in that script. So that it publishes to the topic Client2 and subscribes from Client1.
 
-*	In fresh terminal window run the below command,
+*	In a fresh terminal window run the below command,
 
 {% highlight lisp %}
 /usr/local/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf
 {% endhighlight %}
 
-*	Open another fresh terminal window and type in,
+*	Open another fresh terminal window, cd to the  'mqtt_im' directory and type in,
 
 {% highlight lisp %}
  ruby Client1.rb
 {% endhighlight %}
 
-*	Open yet another fresh terminal and window type in,
+*	Open yet another fresh terminal window, cd to the  'mqtt_im' directory  and  type in,
 
 {% highlight lisp %}
 ruby Client2.rb
