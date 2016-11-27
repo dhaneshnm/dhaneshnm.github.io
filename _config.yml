@@ -1,3 +1,2 @@
 name: Tilting at Windmill
-markdown: redcarpet
-pygments: true
+highlighter: true
