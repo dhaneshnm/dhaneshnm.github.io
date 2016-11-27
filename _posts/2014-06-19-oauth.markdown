@@ -1,8 +1,0 @@
----
-layout: post
-title:  "oauth!"
-date:   2014-06-19 17:50:54
-categories: oauth
----
-
-I have been working on a oauth service provide of past 4 months.
