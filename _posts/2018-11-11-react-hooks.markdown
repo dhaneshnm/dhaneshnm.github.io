@@ -7,7 +7,7 @@ categories: javascript
 
 React Hooks, the experimental feature is out. These are my thoughts on how hooks may or may not make building apps with React Better.
 
-The hooks provides functional components, access to states, life cycle methods and context. That sounds great and provides a lot obvious benefits already documented in a lot talks and articles like [this one](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889).
+The hooks allows functional components, to access states, life cycle methods and context. That sounds great and provides a lot of obvious benefits already documented in a lot pf talks and articles like [this one](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889).
  
 The most attractive feature here is the ability to create custom hooks, combining the state, effects and context hooks provided by the API. I am looking forward to see all the interesting design patterns and libraries that developers will come up with custom hooks.
 
