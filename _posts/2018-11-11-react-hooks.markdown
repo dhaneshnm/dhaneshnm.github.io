@@ -11,7 +11,7 @@ The hooks allows functional components, to access states, life cycle methods and
  
 The most attractive feature here is the ability to create custom hooks, combining the state, effects and context hooks provided by the API. I am looking forward to see all the interesting design patterns and libraries that developers will come up with custom hooks.
 
-Another interesting aspect is to see how hooks will affect then use libraries like redux in react eco system. Hooks API provides a [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook. This helps to "hook" the redux or similar state manager to any functional component. I expect there to be a wave of interesting use cases and patterns around the usage of useReducer hook.
+Another interesting aspect is to see how hooks will affect the use libraries like redux in react ecosystem. Hooks API provides a [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook. This helps to "hook" the redux or similar state manager to any functional component. I expect there to be a wave of interesting use cases and patterns around the usage of useReducer hook.
 
 Now it is easy to make any functional component a "state full" component that has side effects. I am concerned about evolution of a bunch of anti-patterns around this ability. This for sure is giving some serious power to the developers and there will be some abuse of hooks for sure.
 
