@@ -1,0 +1,72 @@
+I"n<p><strong>What are we building today?</strong></p>
+
+<p>We are building a dead simple Instant messaging system with ruby and MQTT. It is only moderately complex than a ‘hello, world!’ app. It will help us to get a basic idea about how MQTT works and how it can be appropraited to make a messenger app.</p>
+
+<p><strong>Ingredients</strong></p>
+
+<ol>
+  <li>
+    <p>Your Macbook</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/njh/ruby-mqtt">ruby-mqtt</a> gem.</p>
+  </li>
+  <li>
+    <p>MQTT broker. We will be using <a href="http://mosquitto.org/">mosquito</a> mqtt broker.</p>
+  </li>
+  <li>
+    <p><a href="https://www.ruby-lang.org/en/">ruby</a> and <a href="http://brew.sh/">homebrew</a> installed in your machine.</p>
+  </li>
+</ol>
+
+<p><strong>Steps</strong></p>
+
+<ul>
+  <li>Run  in your terminal.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-lisp" data-lang="lisp"><span class="nv">brew</span> <span class="nv">install</span> <span class="nv">mosquito</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p>Create a directory named mqtt_im.</p>
+  </li>
+  <li>
+    <p>Navigate to mqtt_im in your terminal and type in the below command.</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-lisp" data-lang="lisp"><span class="nv">gem</span> <span class="nv">install</span> <span class="nv">mqtt</span></code></pre></figure>
+
+<ul>
+  <li>Inside that directory create a file called Client1.rb and paste the content of the below gist in to it.</li>
+</ul>
+
+<script src="https://gist.github.com/dhaneshnm/9beadb285b38dbc8d18c.js"></script>
+
+<ul>
+  <li>
+    <p>Inside the same directory create a file called Client1.rb and paste the content of the below gist in to it. Now change ‘Client’ in to ‘Client2’ and vice versa in that script. So that it publishes to the topic Client2 and subscribes from Client1.</p>
+  </li>
+  <li>
+    <p>In a fresh terminal window run the below command,</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-lisp" data-lang="lisp"><span class="nv">/usr/local/sbin/mosquitto</span> <span class="nv">-c</span> <span class="nv">/usr/local/etc/mosquitto/mosquitto.conf</span></code></pre></figure>
+
+<ul>
+  <li>Open another fresh terminal window, cd to the  ‘mqtt_im’ directory and type in,</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-lisp" data-lang="lisp"> <span class="nv">ruby</span> <span class="nv">Client1.rb</span></code></pre></figure>
+
+<ul>
+  <li>Open yet another fresh terminal window, cd to the  ‘mqtt_im’ directory  and  type in,</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-lisp" data-lang="lisp"><span class="nv">ruby</span> <span class="nv">Client2.rb</span></code></pre></figure>
+
+<p>Now if you type some thing in the window where you ran Client1 that will show up in the window where you ran Client2 and vice-versa. In other words your ruby/mqtt IM system is ready.</p>
+
+:ET
