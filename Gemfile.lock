@@ -64,4 +64,8 @@ DEPENDENCIES
   jekyll
 
 BUNDLED WITH
+<<<<<<< HEAD
    1.17.2
+=======
+   2.0.2
+>>>>>>> 6a6b503 (changes)
