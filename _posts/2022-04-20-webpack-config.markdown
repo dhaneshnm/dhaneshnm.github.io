@@ -5,7 +5,7 @@ date: 2022-04-20 09:50:54
 categories: webpack
 ---
 
-Here is a dead simple webpack configuration for vanilla javascript project. This will create the bundle in to the 'dist' directory. And it uses the devServer that comes with webpack with hot reloading to make development easier.
+Here is a dead simple webpack configuration for a vanilla javascript project. This will create the bundle in to the 'dist' directory. And it uses the devServer option that comes with webpack with hot reloading to make development easier.
 
 {% highlight javascript %}
 const webpack = require("webpack");
