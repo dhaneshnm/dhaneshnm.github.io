@@ -1,0 +1,349 @@
+I"�D<h1 id="grokking-simplicity-summary--notes">Grokking Simplicity (Summary &amp; Notes)</h1>
+
+<h3 id="chapter-4">Chapter 4</h3>
+
+<ul>
+  <li>Functions can have implicit and explicit inputs and outputs. A function is an action if it has implicit input or output. Eliminating implicit i/o will turn the function into a calculation.</li>
+  <li>implicit inputs can be turned in to function’s input arguments and implicit output can be replaced with return values.</li>
+  <li>Extract subroutine is a refactoring technique that will help turn an action in to one or more calculations by eliminating implicit i/o.</li>
+  <li>copy on write : Copy a mutable value before modifying it to keep the immutability.</li>
+  <li>By turning code in to more functional, the ratio of code in calculations will increase and ratio of code in actions will decrease.</li>
+</ul>
+
+<h3 id="chapter-5">Chapter 5</h3>
+
+<ul>
+  <li>Functional design is about pulling things apart and organising the code in to small (single responsibility) functions that can be used to compose larger things.</li>
+  <li>There is mention about how functional design renders layering of the code in to things business rules, utility methods etc.</li>
+  <li>Functional design also helps with re-usability.</li>
+  <li>The capter mostly has code examples and refactor walk through to help the reader understand the first point. (<a href="https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0">https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0#16a4e4c265934d558abc53687a7ebad9</a>).</li>
+</ul>
+
+<h3 id="chapter-6-immutability">Chapter 6 (Immutability)</h3>
+
+<ul>
+  <li>It is difficult to do immutable operations when data is deeply nested, but it is possible.</li>
+  <li>Operations can be categorised in to read, write or both.</li>
+  <li>Out of this, write and read/write modify the data. Here we need to apply copy-on-write to keep immutability of the data.</li>
+  <li>Three steps of copy on write:
+    <ul>
+      <li>Make a copy.</li>
+      <li>Modify the copy.</li>
+      <li>return the copy.</li>
+    </ul>
+  </li>
+  <li>copy-on-wrote <strong><em>converts writes in to reads</em></strong>.</li>
+  <li>When a function modifies an item and then returns a value, it is a read/write function. In order to make it immutable, we split it in two (read and write) and then apply copy on write to the write function.</li>
+  <li>Other approach is to return an object with both values.</li>
+  <li>Reads to mutable data structures are Actions, but reads to immutable DS is a calculation.</li>
+  <li>structural sharing: Two nested data structures referencing the same inner data structure.</li>
+  <li>shallow copy: Copying only the top level data structure in nested data.</li>
+  <li>Javascript utilities for copy on write
+    <ul>
+      <li>Object.assign</li>
+      <li>
+        <h2 id="slice-in-case-of-array-to-create-a-copy">.slice (in case of array, to create a copy)</h2>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-7-staying-immutable-with-untrusted-code">Chapter 7 (Staying immutable with untrusted code)</h3>
+
+<ul>
+  <li>There may be situations where refactoring a piece of code that mutates the data, is not possible.</li>
+  <li>In the above case, we use <strong><em>defensive copying.</em></strong></li>
+  <li>In defensive copying, you make a <strong><em>deep copy for</em></strong> the object before passing it to the lgacy/untrusted code. And then you make a deep copy after the object is returned from the legacy/untrusted code.</li>
+  <li>We can create a wrapper function to wrap the following three steps
+    <ul>
+      <li>make a deep copy before passing data to untrusted code.</li>
+      <li>call untrusted code.</li>
+      <li>make a copy of data again and use the copy for the rest of the program.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-8-stratified-design-part-1">Chapter 8 (Stratified Design Part 1)</h3>
+
+<ul>
+  <li>Software Design : <em>“using one’s aesthetic sense to guide programming choices to improve the ease of coding, testing, and maintaining software”.</em></li>
+  <li>Stratified Design: A technique of building software in layers. (Layered Architecture).</li>
+  <li>Four patterns of stratified Design:
+    <ul>
+      <li><strong>Straightforward implementation</strong> : “When we read a function with a straightforward implementation, the problem the function signature presents should be solved at the right level of detail in the body”</li>
+      <li><strong>Abstraction Barrie</strong>r: Layers provide an interface that hides implementation details</li>
+      <li><strong>Minimal interface</strong>: Limited to a small, powerful set of operations.</li>
+      <li><strong>Comfortable layers</strong>: It should help programmers and meet their needs.</li>
+    </ul>
+  </li>
+  <li>Visualising functions with a <strong>call graph</strong> can help us identify the layers and make it more straight forward.</li>
+  <li>With <strong>Straightforward implementation</strong> a function will call other functions with in it, but all those functions will be of similar level of abstractions. ie, It won’t call a low level function and then in next line a high level function.</li>
+  <li>In SI, all function in the same layer should serve the same purpose. (eg: from the book, function in cart layers, do ops like adding/removing/checking items etc on the cart).</li>
+  <li>Zoom levels to identify layers:
+    <ul>
+      <li>Interaction between layers.</li>
+      <li>Implementation of one layer.</li>
+      <li>Implementation of a function.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-9-stratified-design-part-2">Chapter 9 (Stratified Design Part 2)</h3>
+
+<ul>
+  <li><strong><em>“An abstraction barrier is a layer of functions that hide the implementation so well that you can completely forget about how it is implemented even while using those functions.”</em></strong></li>
+  <li>Abstraction barrier lets us ignore implementation details.</li>
+  <li>Abstraction barrier guide lines. (Use abstraction barrier for /to ..)
+    <ul>
+      <li>To facilitate changes of implementation.</li>
+      <li>To make code easier to read and write.</li>
+      <li>To reduce coordination between teams.</li>
+      <li>To mentally focus on the problem at hand. (By hiding unimportant details for that level, the level above can focus on a different problem).</li>
+    </ul>
+  </li>
+  <li>Minimal interface: function that implement an abstraction barrier is its interface. Principle of Minimal interface states that, we should keep the interfaces in an abstraction barrier to a minimum. (as small as possible).</li>
+  <li>Advantages of keeping interfaces minimal:
+    <ul>
+      <li>More code will require more work when we change the implementation.</li>
+      <li>Lower level code is harder to under stand.</li>
+      <li>More functions in a barrier means more coordination between teams.</li>
+      <li>Larger interface is harder to keep in the head.</li>
+      <li>For the consumers of a barrier, the code inside the barrier is of lower level. It is more likely to have bugs compared to the higher level code (comment: I don’t understand this point).</li>
+    </ul>
+  </li>
+  <li>Comfortable layers: The layers should be comfortable, ie, For the users of then layers it should be practical and useful. In other words, don’t create useless abstractions.</li>
+  <li>Call graph can throw light of the non functional requirements of the software. Looking at the call graph can let us figure of testability, maintainability and reusability of the software.
+    <ul>
+      <li>“Rule: The fewer functions on the path to the top of the graph, the easier a function is to change.”</li>
+      <li>“Rule: The more functions on the path to the top of the graph, the more valuable its tests will be.”</li>
+      <li>“Rule: The fewer functions underneath a function, the more reusable it is.”</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-10-first-class-functions--part1">Chapter 10 (First class functions : Part1)</h3>
+
+<ul>
+  <li>first class values are the values passed in to function or returned by a function.</li>
+  <li>fist class functions are functions that can be passed as an argument to another function.</li>
+  <li>higher order functions are function that take another function as its argument.</li>
+  <li>There are three ways in which you can define a function:
+    <ul>
+      <li>Global : “function” key word in JS</li>
+      <li>with in a scope by assigning it to a variable. (const ,let and arrow syntax).</li>
+      <li>Inline (using arrow syntax of using function key word).</li>
+    </ul>
+  </li>
+  <li>The following code smells and refactoring make use of first class values:
+    <ul>
+      <li>code smell : Implicit argument in function name. <em>“If you are referring to a value in the body of a function, and that value is named in the function name, this smell applies. The solution is the next refactoring.”.</em></li>
+      <li>Refactoring: Express implicit argument
+        <ul>
+          <li>Identify the implicit argument in the name of the function.</li>
+          <li>Add explicit argument.</li>
+          <li>Use new argument in body in place of hard-coded value.</li>
+          <li>Update the calling code.</li>
+        </ul>
+      </li>
+      <li>Refactoring: Replace body with callback.
+        <ul>
+          <li>Identify the before, body, and after sections.</li>
+          <li>Extract the whole thing into a function.</li>
+          <li>Extract the body section into a function passed as an argument to that function.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-11-first-class-functions-part2">Chapter 11 (First class functions part2)</h3>
+
+<ul>
+  <li>Higher order function can also return a function just like it accepts a function as an argument. This pattern can be used to wrap function in a higher order function to give it additional powers (such as ability to log data to an external service)</li>
+</ul>
+
+<h3 id="chapter-12-functional-iteration">Chapter 12 (Functional Iteration)</h3>
+
+<ul>
+  <li>Introduces thee functional tools to loop through an array: map, reduce and filter.</li>
+  <li>Use cases for reduce:
+    <ul>
+      <li>Concatenating strings</li>
+      <li>Undo/Redo : “ If you imagine your current state as applying reduce() to a list of user interactions, undo just means removing the last interaction from the list”.</li>
+      <li>Replaying User Interaction for testing:</li>
+      <li>Time travelling debugger.</li>
+      <li>Audit trails.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-13-chaining-functional-tools">Chapter 13 (Chaining functional tools)</h3>
+
+<ul>
+  <li>What is functional chaining? provide few examples?</li>
+  <li>Clarifying chains
+    <ul>
+      <li>Method 1: Name the steps.</li>
+      <li>Method 2: Name the call backs.</li>
+    </ul>
+  </li>
+  <li>Refactoring existing for loops to functional tools:
+    <ul>
+      <li>Strategy 1: Understand and rewrite: Understand what the loop does and rewrite it completely using map, filter or reduce.</li>
+      <li>Refactor from clues: Pick apart the existing for loop and turn it in to functional chains.
+        <ul>
+          <li>Tip 1: Make data</li>
+          <li>Tip 2:Operate on the whole array at once.</li>
+          <li>Tip 3: Take many small steps</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Other functional tools
+    <ul>
+      <li>Pluck (pull out a filed from each object in an array)</li>
+      <li>Concat (unnest array inside and array)</li>
+      <li>frequenciesBy (counting)</li>
+      <li>groupBy (grouping)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-14-functional-tools-for-nested-data">Chapter 14 (Functional tools for nested data)</h3>
+
+<ul>
+  <li>update : a higher order function that takes the object, field and modify function that will modify the value of the given filed. update isa functional tool that operates on an object, unlike map, reduce, filter that operates on an array.</li>
+  <li>recursive update: We can create a recursive version of update, in order to address the updates in a nested object.</li>
+  <li>Abstraction barrier can be used to handle issues emerging from deep nesting. <strong><em>“You can apply abstraction barriers to key data structures so that you don’t have as much to remember. This can make working with deep structures easier.”</em></strong></li>
+</ul>
+
+<h3 id="chapter-15-isolating-timelines">Chapter 15 (Isolating timelines)</h3>
+
+<ul>
+  <li>The time line diagrams shows what happens over time when the code is executed.
+    <ul>
+      <li>A time line is a sequence of action.</li>
+      <li>“A timeline diagram graphically represents a sequence of actions over time”.</li>
+      <li>If two actions occur in order, put them in the same time line.</li>
+      <li>If two actions cam happen at the same time or out of order, put them in different time lines.</li>
+    </ul>
+  </li>
+  <li>Gotcha: Arguments are executed before the function is called.</li>
+  <li>Steps in drawing time line digram:
+    <ul>
+      <li>Identify actions.</li>
+      <li>Draw each action, whether sequential or parallel.</li>
+      <li>Simplify using platform specific knowledge.</li>
+    </ul>
+  </li>
+  <li>Principles of working with timelines:
+    <ul>
+      <li>Fewer timelines are easier.</li>
+      <li>Shorter times lines are easier.</li>
+      <li>Sharing fewer resources are easier.</li>
+      <li>Coordinate when resources are shared.</li>
+      <li>Manipulate time as a first-class concept: “Create re-usable objects that manipulate time line.</li>
+    </ul>
+  </li>
+  <li>Eliminating global variables shared by action with interleaving time lines is way to avoid bugs created by async code in JS.</li>
+</ul>
+
+<h3 id="chapter-16--17-sharing-resources-between-time-lines--coordinating-time-lines">Chapter 16 &amp; 17 (Sharing resources between time lines &amp; Coordinating time lines).</h3>
+
+<p><strong>Key words: Share Resources, Queues, Concurrency primitives</strong></p>
+
+<ul>
+  <li>“A race condition occurs when the behaviour depends on which timeline finishes first.”</li>
+  <li>We can use concurrency primitives to solve resource sharing problems between time lines.</li>
+  <li>In this book, Queue is used as an example for concurrency primitive.</li>
+  <li>Promise.all is another JS concurrency primitive.</li>
+  <li>Examples of concurrency primitives:
+    <ul>
+      <li>Queue: “Items added to the queue are processed in a separate, single timeline”</li>
+      <li>Cut: “Call a callback in a new timeline only after all timelines have completed”</li>
+      <li>JustOnce: “An action wrapped in JustOnce() will only be executed once, even if the wrapped function is called multiple times”.</li>
+      <li>DroppinQueue: “This is like a Queue(), but will skip tasks if they build up quickly:”</li>
+    </ul>
+  </li>
+</ul>
+
+<p>“In JavaScript, the time model is quite simple:</p>
+
+<p>Sequential statements execute in sequential order. _
+Steps in two different timelines can occur in left-first or right-first order. _
+Asynchronous events are called in new timelines. *
+An action is executed as many times as you call it.**”</p>
+
+<h3 id="chapter-18-reactive-and-onion-architecture">Chapter 18 (Reactive and Onion Architecture)</h3>
+
+<p>Key words: Onion Architecture, Reactive Architecture, Common Mutable State, Interaction Layer.</p>
+
+<ul>
+  <li>Reactive Architecture:
+    <ul>
+      <li>Helps to decouple cause from effect.</li>
+      <li>Treats a series of steps as a pipeline.</li>
+      <li>Creates flexibility in the time line.</li>
+      <li>Watcher/Observer/Listeners/Event handlers/Call back are similar ideas. They help to make the code “reactive”.</li>
+      <li>ValueCells/Atoms/Agents/Redux Store/ TVars etc are similar concepts that implement Watcher pattern with in them.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Onion Architecture</p>
+
+    <ul>
+      <li>It is drawn a set of concentric circles.</li>
+      <li>Divides the app in to three layers, Interaction (Actions), Domain (Calculations only) and Language.</li>
+      <li>
+        <p>Rules:</p>
+
+        <ul>
+          <li>Interaction with the world is done exclusively in the interaction layer.</li>
+          <li>layers call in towards the centre.</li>
+          <li>Layers don’t know about layers outside of themselves.</li>
+          <li>Can a domain rule be an action?
+            <ul>
+              <li>Examine the terms used to place the rule in a layer.</li>
+              <li>Analyse readability and awkwardness.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>“The onion architecture is fractal. It can be found at every level of abstraction in your actions”</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="chapter-19-the-functional-journey-ahead">Chapter 19 (The functional journey ahead)</h3>
+
+<ul>
+  <li>Two tracks to mastery:
+    <ul>
+      <li>Sandbox
+        <ul>
+          <li>Practise excercises</li>
+          <li>Side projects</li>
+          <li>throw way branch of prod code.</li>
+        </ul>
+      </li>
+      <li>Production
+        <ul>
+          <li>Refactoring existing code.</li>
+          <li>New features in an existing product</li>
+          <li>A new, greenfield product.</li>
+          <li>Teaching others.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Math for functional programmers.
+    <ul>
+      <li>Lambda calculas</li>
+      <li>Combinators</li>
+      <li>Type theory</li>
+      <li>category theory.</li>
+      <li>Effect systems.</li>
+    </ul>
+  </li>
+</ul>
+:ET

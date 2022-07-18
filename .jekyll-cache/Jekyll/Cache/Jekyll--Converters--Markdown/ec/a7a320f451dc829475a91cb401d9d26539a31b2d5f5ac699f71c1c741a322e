@@ -1,0 +1,24 @@
+I"B<p>Here is a dead simple webpack configuration for a vanilla javascript project. This will create the bundle in to the ‘dist’ directory. And it uses the devServer option that comes with webpack with hot reloading to make development easier.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="na">mode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">development</span><span class="dl">"</span><span class="p">,</span>
+<span class="na">entry</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./src/index.js</span><span class="dl">"</span><span class="p">,</span>
+<span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+<span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="o">**</span><span class="nx">dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dist</span><span class="dl">"</span><span class="p">),</span>
+<span class="na">filename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">bundle.js</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">},</span>
+<span class="na">devServer</span><span class="p">:</span> <span class="p">{</span>
+<span class="na">static</span><span class="p">:</span> <span class="p">{</span>
+<span class="na">directory</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="o">**</span><span class="nx">dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">dist</span><span class="dl">"</span><span class="p">),</span>
+<span class="p">},</span>
+<span class="na">compress</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="na">port</span><span class="p">:</span> <span class="mi">9000</span><span class="p">,</span>
+<span class="p">},</span>
+<span class="p">};</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span></code></pre></figure>
+
+:ET
