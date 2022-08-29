@@ -20,7 +20,7 @@ categories: books
 - Functional design is about pulling things apart and organising the code in to small (single responsibility) functions that can be used to compose larger things.
 - There is mention about how functional design renders layering of the code in to things business rules, utility methods etc.
 - Functional design also helps with re-usability.
-- The capter mostly has code examples and refactor walk through to help the reader understand the first point. ([https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0#16a4e4c265934d558abc53687a7ebad9](https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0)).
+- The chapter mostly has code examples and refactor walk through to help the reader understand the first point.
 
 ### Chapter 6 (Immutability)
 
