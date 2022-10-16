@@ -1,0 +1,58 @@
+---
+layout: "../../layouts/BlogPost.astro"
+title: "Currying!"
+pubDate: "Feb 09 2014"
+categories: lambda
+---
+
+One of my new year’s resolution is to learn and practice functional programming concepts in two languages I code most of my time. Javascript and Ruby. Since it is easy to understand the concepts in some LISP variant, I added scheme to the list and now I have 3 different languages to practice my “lambda skills”.
+
+Though I am Computer Science Graduate and have taken Programming language courses, I have never understood the meaning and scope of currying so far. So I am starting with currying in my attempt to understand the “science of lambda”.
+
+## The Code of Currying
+
+Currying can be defined as ,
+“The technique of transforming a function that takes multiple arguments(or a n- tuple of arguments) in such away that it can be called as a chain of functions each with a single argument”. It is named after the Mathematician Haskel B.Curry. Otherwise something like "Automatic function decomposition” would have been a more “under standable” name. Alternately currying can be termed as, “The concept of deconstructing a function of multiple parameters to a composition of several functions of arity 1”. Arity is the number of arguments a function can take.
+
+Now let us write a scheme function that multiplies two numbers.
+
+```lisp
+(define multiply
+(lambda (x y)
+(\* x y)))
+```
+
+Now let us write a function that doubles a number using the above multiply function.
+
+```lisp
+(define double
+    (lambda (x)
+        (multiply 2 x))
+)
+```
+
+Another function that halves a number :
+
+```lisp
+(define half
+    (lambda (x)
+    (multiply .5 x))
+)
+```
+
+Now you can see that double is nothing but multiply called with second argument always being 2. And for half it is 0.5 .
+
+```lisp
+(define curry-multiply
+(lambda (x)
+(lambda (y)
+(\* x y))))
+{% endhighlight %}
+```
+
+The advantage of this new construct is that, we can create a lot of variants of multiply by simply calling multiply with one argument.
+
+```lisp
+(define double ( curry-multiply 2))
+(define half ( curry-multiply .5))
+```
