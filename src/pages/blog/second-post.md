@@ -6,7 +6,7 @@ pubDate: "Jul 18 2022"
 heroImage: "/placeholder-hero.jpg"
 ---
 
-A few weeks ago, I finsihed reading the book [Grokking Simplicity](https://www.manning.com/books/grokking-simplicity). It is a very good read for anyone who want to get a better grasp on functional programming, with going too much in to low level details.
+A few weeks ago, I finsihed reading the book [Grokking Simplicity](https://www.manning.com/books/grokking-simplicity). It is a very good read for anyone who wants to get a better grasp on functional programming, with out going too much in to low level details.
 Here are some notes I have from the book.
 
 ### Chapter 4
@@ -22,7 +22,7 @@ Here are some notes I have from the book.
 - Functional design is about pulling things apart and organising the code in to small (single responsibility) functions that can be used to compose larger things.
 - There is mention about how functional design renders layering of the code in to things business rules, utility methods etc.
 - Functional design also helps with re-usability.
-- The chapter mostly has code examples and refactor walk through to help the reader understand the first point. ([https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0#16a4e4c265934d558abc53687a7ebad9](https://www.notion.so/Grokking-Simplicity-5252e3df46aa410ebdbbc75ad03722a0)).
+- The chapter mostly has code examples and refactor walk through to help the reader understand the first point.
 
 ### Chapter 6 (Immutability)
 
