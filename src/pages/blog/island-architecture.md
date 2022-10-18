@@ -29,7 +29,7 @@ In both of the above cases, the frameworks are optimized for interactivity. But 
 
 These types of pages will be forced to use heavy CSR or even SSR, when they actually need a tiny bit of interactivity. But for that tiny bit, they stand to lose on the google SEO rankings. Their initial load time is high and they don’t measure well on the metrics like lighthouse metrics.
 
-There are a bunch of techniques that try to address this problem. Steaming server side rendering, Partial Rehydration, Progressive Rehydration and Trisomorphic Rehydration etc tries to reduce the amount of javascript sent down to the client and thus tries to reduce the bundle size, compute and off course load time and initial interaction time. They are often complicated to implement and not the default behavior of the frameworks.
+There are a bunch of techniques that try to address this problem. Streaming server side rendering, Partial Rehydration, Progressive Rehydration and Trisomorphic Rehydration etc tries to reduce the amount of javascript sent down to the client and thus tries to reduce the bundle size, compute, load time and initial interaction time. They are often complicated to implement and not the default behavior of the frameworks.
 
 Island architecture is trying to solve this problem. Some frameworks that support this architecture also offer some additional benefits similar to micro front-end architecture.
 
