@@ -10,7 +10,8 @@ heroImage: "/placeholder-hero.jpg"
 
 Here are some notes from the paper.
 
-- “A BIG BALL OF MUD is haphazardly structured, sprawling, sloppy, duct-tape and bailing wire, spaghetti code jungle.”
+> “A BIG BALL OF MUD is haphazardly structured, sprawling, sloppy, duct-tape and bailing wire, spaghetti code jungle.”
+
 - The authors presents six patterns:
   - BIG BALL OF MUD
   - THROWAWAY CODE
@@ -32,9 +33,10 @@ Here are some notes from the paper.
   - “_Therefore_, focus first on features and functionality, then focus on architecture and performance”.
     > “What does this muddy code look like to the programmers in the trenches who must confront it? Data structures may be haphazardly constructed, or even next to non-existent. Every shred of important state data may be global. Variable and function names might be uninformative, or even misleading. Functions themselves may make extensive use of global variables, as well as long lists of poorly defined parameters. The function themselves are lengthy and convoluted, and perform several unrelated tasks. Code is duplicated. The flow of control is hard to understand, and difficult to follow. The programmer’s intent is next to impossible to discern. The code is simply unreadable, and borders on indecipherable. The code exhibits the unmistakable signs of patch after patch at the hands of multiple maintainers, each of whom barely understood the consequences of what he or she was doing. Did we mention documentation? What documentation?”
   - This is not an anti-pattern, since this so prevalent.
-  - “Make it work. Make it right. Make it fast”, Making it right is different. This is similar triangle to “CAP” in Data base design.
+  - “Make it work. Make it right. Make it fast”. This is similar to the triangle
+    <a href="https://en.wikipedia.org/wiki/CAP_theorem" target="\_blank">CAP</a> in Data base design. Where you can have two of three things. Authors says that, "Making it right is different".
 - THROWAWAY CODE
-  - A prototype that stuck. (Remember front rush).
+  - A prototype that stuck.
   - You need an immediate fix for a small problem, or a quick prototype or proof of concept.
   - “Therefore, produce, by any means available, simple, expedient, disposable code that adequately addresses just the problem at-hand”.
 - PIECEMEAL GROWTH
