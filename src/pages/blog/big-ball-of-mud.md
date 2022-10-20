@@ -6,7 +6,7 @@ pubDate: "Oct 19 2022"
 heroImage: "/placeholder-hero.jpg"
 ---
 
-<a href='http://www.laputan.org/mud/mud.html#BigBallOfMud' target="_blank">Big Ball of mud</a> is paper by Brian Foote and Joseph Yoder. It came out all most 30 years ago, but most of the content still seemm to be very relevent. The architecture or lack of it in a software and how and whay that happens.
+<a href='http://www.laputan.org/mud/mud.html#BigBallOfMud' target="_blank">Big Ball of mud</a> is a paper by Brian Foote and Joseph Yoder. It came out all most 30 years ago, but most of the content seem to be still very relevent. It deals with the architecture or lack of it in a software system and how and why that happens.
 
 Here are some notes from the paper.
 
