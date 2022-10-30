@@ -6,7 +6,7 @@ pubDate: "Oct 30 2022"
 heroImage: "/placeholder-hero.jpg"
 ---
 
-Reflect is a built in global object in JavaScript. Reflect was introduced in ES6 along with Proxy. Reflect has methods that has the same name and similar behaviour as in the built in Object and Proxy. In this post, we look into the Reflect.apply method.
+Reflect is a built in global object in JavaScript. It was introduced in ES6 along with Proxy. In this post, we look into the Reflect.apply method.
 
 Apply method is available in function.prototype.apply as of ES5. In ES6, we have another apply available with Reflect. It behaves the same way with a couple of minor differences.
 function.prototype.apply() method calls the specified function with a given this value, and arguments provided as an array (or an array-like object). The first argument is the "this" value and the second is arguments in an array-like object.
