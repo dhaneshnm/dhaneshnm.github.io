@@ -105,13 +105,13 @@ function conditionalFreeze(toFreeze) {
 }
 
 const profile1 = {
-  firtsNamename: "John",
+  firtsName: "John",
   lastName: "Smith",
   jobTitle: "Dynamic Factors Planner",
   salary: 110,
 };
 const profile2 = {
-  firtsNamename: "Jean",
+  firtsName: "Jean",
   lastName: "Wang",
   jobTitle: "Forward Markets Analyst",
   salary: 100,
