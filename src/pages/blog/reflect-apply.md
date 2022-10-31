@@ -1,6 +1,6 @@
 ---
 layout: "../../layouts/BlogPost.astro"
-title: "Apply method in Reflect"
+title: "Reflect.apply"
 description: "Apply method in Reflect"
 pubDate: "Oct 30 2022"
 heroImage: "/placeholder-hero.jpg"
