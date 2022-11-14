@@ -6,7 +6,7 @@ pubDate: "Nov 14 2022"
 heroImage: "/placeholder-hero.jpg"
 ---
 
-We have been using async … await syntax for a while in JS. With that, await was only available with functions that were marked with the ‘async’ keyword. With top-level await, we can use await at the module level.
+<a href='https://github.com/tc39/proposal-top-level-await' target='_blank'>Top level await</a> is a new feature added to javascript in ES2022.We have been using async … await syntax for a while in JS. With that, await was only available with functions that were marked with the ‘async’ keyword. With top-level await, we can use await at the module level.
 
 The syntax of the await is the same when it is used at the module level. We have an “await” keyword followed by an expression. This expression needs to be a promise, a thenable object, or something to wait for.
 
@@ -52,4 +52,4 @@ Here we try to load a module from a few different sources. And import the module
 
 Like the function level await, top level wait can make asynchronicity transparent. It also ensures that, asynchrnous imports are not accessed before a module is fully intialized.
 
-But the [Control flow effects of await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#control_flow_effects_of_await) are applicable to top level await as well. So it can block imports and delay the initialization of a module. So we should use it with caution.
+But the <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#control_flow_effects_of_await' target='_blank'>Control flow effects of await</a> are applicable to top level await as well. It can block imports and delay the initialization of a module. So we should use it with caution.
