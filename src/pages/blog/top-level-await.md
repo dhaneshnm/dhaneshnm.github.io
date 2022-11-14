@@ -20,29 +20,29 @@ We can use the await synatx to dynamically import a module.
 
 ```javascript
 const params = new URLSearchParams(location.search);
-const language = params.get("lang");
-const messages = await import(`./messages-${language}.mjs`); // (A)
+const location = params.get("location");
+const map = await import(`./map-${location}.mjs`); // (A)
 
-console.log(messages.welcome);
+console.log(map.currentMap);
 ```
 
 There are also a couple interesting variations of this usecase.
 
 ```javascript
-let lodash;
+let moduleA;
 try {
-  lodash = await import("https://primary.example.com/lodash");
+  moduleA = await import("https://first.example.com/moduleA");
 } catch {
-  lodash = await import("https://secondary.example.com/lodash");
+  moduleA = await import("https://second.example.com/moduleA");
 }
 ```
 
 In the above example, if the module fails to load with the first url, we try a second url with in the catch block.
 
 ```javascript
-const resource = await Promise.any([
-  fetch("http://example.com/first.txt").then((response) => response.text()),
-  fetch("http://example.com/second.txt").then((response) => response.text()),
+const moduleA = await Promise.any([
+  fetch("http://example.com/one.txt").then((response) => response.text()),
+  fetch("http://example.com/two.txt").then((response) => response.text()),
 ]);
 ```
 
