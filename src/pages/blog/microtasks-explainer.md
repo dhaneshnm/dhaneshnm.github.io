@@ -55,7 +55,7 @@ function sendData(data) {
 Let us look at this example from the <a href='https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#microtask-queuing' target='_blank'>queueMicrotask spec</a>.
 Here, if even when sendData is called multiple times, with in one synchronous JS execution, the network call happens only once. The multiple calls are getting batched together using a microtask. Compared to using setTimeout approach, here there is no intervening event loop tasks preempting the fetch.
 
-<a herf='https://tanstack.com/query/v4/docs/adapters/solid-query' target='_blank'>Solid-Query uses <a> the above pattern to batch execute tasks. Here is how the code in solitquery looks like,
+<a herf='https://tanstack.com/query/v4/docs/adapters/solid-query' target='_blank'>Solid-Query</a> uses the above pattern to batch execute tasks. Here is how the code in Solid-Query looks like.
 
 ```javascript
 let taskQueue: Array<() => void> = [];
@@ -87,7 +87,7 @@ const unsubscribe = observer.subscribe((result) => {
 });
 ```
 
-You ca read more about it in this <a href='https://github.com/TanStack/query/pull/4211/files#diff-714a59e79c53679067f732913ea8f89b7f04541556ca1787b73c6a7091838e87' target='_blank'>PR</a>.
+You can read more about it in this <a href='https://github.com/TanStack/query/pull/4211/files#diff-714a59e79c53679067f732913ea8f89b7f04541556ca1787b73c6a7091838e87' target='_blank'>PR</a>.
 
 queueMicrotask can also be used to ensure consistent ordering. Let us consider the following code,
 
