@@ -2,7 +2,7 @@
 layout: "../../layouts/BlogPost.astro"
 title: "Microtasks and queueMicrotask"
 description: "A short guide on microtasks"
-pubDate: "Nov 14 2022"
+pubDate: "Nov 19 2022"
 heroImage: "/placeholder-hero.jpg"
 ---
 
