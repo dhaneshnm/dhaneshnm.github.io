@@ -91,17 +91,19 @@ You ca read more about it in this <a href='https://github.com/TanStack/query/pul
 
 queueMicrotask can also be used to ensure consistent ordering. Let us consider the following code,
 
-```javacript
+```javascript
 MyElement.prototype.loadData = function (url) {
   if (this._cache[url]) {
     this._setData(this._cache[url]);
     this.dispatchEvent(new Event("load"));
   } else {
-    fetch(url).then(res => res.arrayBuffer()).then(data => {
-      this._cache[url] = data;
-      this._setData(data);
-      this.dispatchEvent(new Event("load"));
-    });
+    fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((data) => {
+        this._cache[url] = data;
+        this._setData(data);
+        this.dispatchEvent(new Event("load"));
+      });
   }
 };
 ```
