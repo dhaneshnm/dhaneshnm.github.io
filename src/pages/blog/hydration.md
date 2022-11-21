@@ -8,7 +8,7 @@ heroImage: "/placeholder-hero.jpg"
 
 ## Introduction
 
-In this post, we take a brief look at the various type of “rehydration” techniques used in web applications. Before we get into the rehydration techniques, let us take see why rehydration is necessary and what type of web pages or apps needs rehydration.
+In this post, we take a brief look at the various type of “rehydration” techniques used in web applications. Before we get into the rehydration techniques, let us see why rehydration is necessary and what type of web pages or apps needs rehydration.
 
 ### Server Rendering
 
