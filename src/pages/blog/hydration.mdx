@@ -45,6 +45,8 @@ There are a few rehydration methods that aim to improve this situation,
 
 For the rest of the article, we will explore each of these items in detail.
 
+<img src="/ssr.png" alt="Server Side Rendering"></img>
+
 ## Streaming server-side Rendering
 
 As we have seen before, the key problem with SSR is the delay in page being ready to interact(Time to Interactive/TTI). Streaming SSR attempts to solve this problem by sending the application in smaller chunks to the browser, such that the browser can start rendering as soon as it receives the first chunk. Node streams allows us to stream the chunks to the browser. React has the “**`renderToReadableStream`**" to help with Streaming SSR.
