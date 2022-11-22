@@ -34,6 +34,18 @@ The downside here of course is that the pages are static. Every time we have a c
 ### Server Side Rendering
 
 Universal rendering or Server Side Rendering (SSR) is an attempt to balance the trade-offs between CSR and server rendering. In SSR, full page loads and reloads are handled by the server. The server creates the full HTML and sends it back to the browser. The javascript and data for rendering are also embedded in the HTML. With SSR, we can have very fast first contentful paint(FCP). Once FCP is done, the page still needs to continue the rendering using the javascript. This is where “Rehydration” comes into the picture. With Rehydration, we add application state and interactivity to the server-rendered HTML. Even though the page may appear to be ready, due to the need for rehydration, the page won’t be ready for interaction until rehydration is complete.
+<img src="/ssr.png" alt="Server Side Rendering"></img>
+
+In SSR,
+
+- You have to fetch everything before you can show anything.
+- You have to load everything before you can hydrate anything.
+- You have to hydrate everything before you can interact with anything.
+
+This is due to the waterfall like situation, where one thing depends on the other as shown in the below image.
+<img src="/ssr-waterfall.png" alt="SSR water fall"></img>
+
+Additionally, for non trivial applications, the size of the javascript bundle would be significant.The major portion of the load time will be spent on downloading the javascript required to run the app. So to improve the performance of the SSR, it is imperative to improve the re-hydration as well as to reduce the bundle size.
 
 There are a few rehydration methods that aim to improve this situation,
 
@@ -45,15 +57,14 @@ There are a few rehydration methods that aim to improve this situation,
 
 For the rest of the article, we will explore each of these items in detail.
 
-<img src="/ssr.png" alt="Server Side Rendering"></img>
+### Streaming Server-Side Rendering
 
-## Streaming server-side Rendering
-
-As we have seen before, the key problem with SSR is the delay in page being ready to interact(Time to Interactive/TTI). Streaming SSR attempts to solve this problem by sending the application in smaller chunks to the browser, such that the browser can start rendering as soon as it receives the first chunk. Node streams allows us to stream the chunks to the browser. React has the “**`renderToReadableStream`**" to help with Streaming SSR.
+Streaming SSR tries to solve the first of the three problems. ie, You have to fetch everything before you can show anything. In Streaming SSR, HTML and relevent inline javascript can be streamed to the client. What this means is, we can send a a chunk of HTML as soon as it is ready. And have place holders of the sections that may take more time to be ready. Then, when the section is ready, stream it to the client with some in line javacsript so that it is populated in the right place.
+This will make the Fisrt Contentful Paint even faster for the SSR. And the hydration can start as soon as the first chunk of HTML is ready. So part of the page will become intercative much earlier, compared to the regular SSR.
 
 ### Progressive (and selective) Re-Hydration
 
-Progressive hydration is another way to reduce the TTI in SSR. Here the trick is to hydrate the page before all the code has loaded. Instead of hydrating all the nodes at one go, we re-hydrate the nodes progressively, using certain conditions. For example, we may only hydrate the nodes that are visible in the viewport.
+Progressive hydration is another way to reduce the TTI in SSR. Here the trick is to hydrate the page before all the code has loaded. Instead of hydrating all the nodes at one go, we re-hydrate the nodes progressively, using certain conditions. For example, we may only hydrate the nodes that are visible in the viewport.Or we may hydrate the node that has a higher probabilty of getting clicked first.
 
 In order to do that, we will have to split our js bundle into multiple chunks and lazy load the chunks based on how we want to hydrate the app.
 
@@ -91,4 +102,4 @@ We have looked at Island Architecture in a previous Article. Here we render HTML
 
 - [https://frontarm.com/james-k-nelson/static-vs-server-rendering/](https://frontarm.com/james-k-nelson/static-vs-server-rendering/)
 
-- [https://github.com/reactwg/react-18/discussions/37](https://github.com/reactwg/react-18/discussions/37)
+- [^ React SSR](https://github.com/reactwg/react-18/discussions/37)
