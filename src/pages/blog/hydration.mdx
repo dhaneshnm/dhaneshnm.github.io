@@ -20,12 +20,16 @@ Then came client-side rendering. In client-side rendering, All logic, data fetch
 
 All modern JS frameworks pretty much work on CSR, with some variations. As you can see, CSR is way slower to load than the classic Server rendering. With core web vitals and google’s push to reward pages that perform better on their metrics, CSR became a problem. A few variations of CSR developed over time to make CSR more “performant”.
 
-<img src="/hydration-1.png" alt='SSR vs CSR'/>
+<img src="/hydration-1.png" alt="SSR vs CSR" />
 
 ### Static Rendering
 
 Static rendering is good for pages that do not have any interactivity. The page is built during build time. The data fetching and building of nodes all happen during the build time. And then the entire app is deployed to a CDN. As you can imagine, this will make the website blazing fast as no data fetching and node construction happening in the server or the client.
 The downside here of course is that the pages are static. Every time we have a change, we will need to go through the build and deploy cycle.
+
+<br></br>
+
+<img src="/static-rendering.png" alt="Static Rendering"></img>
 
 ### Server Side Rendering
 
