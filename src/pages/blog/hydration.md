@@ -36,6 +36,22 @@ The downside here of course is that the pages are static. Every time we have a c
 Universal rendering or Server Side Rendering (SSR) is an attempt to balance the trade-offs between CSR and server rendering. In SSR, full page loads and reloads are handled by the server. The server creates the full HTML and sends it back to the browser. The javascript and data for rendering are also embedded in the HTML. With SSR, we can have very fast first contentful paint(FCP). Once FCP is done, the page still needs to continue the rendering using the javascript. This is where “Rehydration” comes into the picture. With Rehydration, we add application state and interactivity to the server-rendered HTML. Even though the page may appear to be ready, due to the need for rehydration, the page won’t be ready for interaction until rehydration is complete.
 <img src="/ssr.png" alt="Server Side Rendering"></img>
 
+#### (Re)Hydration
+
+> (Re)Hydration is the name given to the process in JavaScript frameworks to initializing the page in the browser after it has previously been server rendered.
+
+There are three main things that reydration does for the page,
+
+- Add listeners. This will make the page ready for interaction.
+- For frameworks like React, the app needs to build the component tree again in the client side. Becuase the framework needs its internal data structur ready to continue to fetch and render new items based on user interaction.
+- The app also needs to restore its application state, so that its internal state reflects what is rendered on the page.
+
+<img src="/replayable.png" alt="replay app state in client. "></img>
+
+Since we are essentially trying to get the client to the same state as the server, this is also known as "replaying". Generally, frameworks that support SSR are replayable.
+
+This comes witha cost and will lead to the following situation.
+
 In SSR,
 
 - You have to fetch everything before you can show anything.
@@ -80,6 +96,10 @@ In order for this to work, the client, server, and service worker should all use
 
 We have looked at Island Architecture in a previous Article. Here we render HTML pages in the server and inject slots in them that can be hydrated in the client. In frameworks like astro, we can also use static rendering (compile time) with slots for “islands” of interactivity that can be hydrated in the client. Here we don’t have any re-hydration at all. The static parts that come from the server, do not have any interactive bits. So they remain static. The islands are entirely hydrated in the client, like in the case of CSR. That is why Jason Miller described it as <a href="https://jasonformat.com/islands-architecture/#:~:text=The%20general%20idea%20of%20an,output%20from%20their%20corresponding%20widget." target="_blank">“progressive hydration for free”.</a>
 
+### Conclusion
+
+We looked at what hydration is and why it is necessery. We looked at the cost and limitations of hydration and different hydration techniques that helps us overcome these problems. Finally, there are frameworks that does SSR with out any hydration. For example qwik does it by being <a href='https://qwik.builder.io/docs/concepts/resumable/' target='_blank'>resumable</a> instead of replayable.
+
 ## References
 
 - [https://dev.to/this-is-learning/why-efficient-hydration-in-javascript-frameworks-is-so-challenging-1ca3](https://dev.to/this-is-learning/why-efficient-hydration-in-javascript-frameworks-is-so-challenging-1ca3)
@@ -102,4 +122,4 @@ We have looked at Island Architecture in a previous Article. Here we render HTML
 
 - [https://frontarm.com/james-k-nelson/static-vs-server-rendering/](https://frontarm.com/james-k-nelson/static-vs-server-rendering/)
 
-- [^ React SSR](https://github.com/reactwg/react-18/discussions/37)
+- [React SSR](https://github.com/reactwg/react-18/discussions/37)
