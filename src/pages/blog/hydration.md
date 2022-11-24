@@ -73,12 +73,12 @@ There are a few rehydration methods that aim to improve this situation,
 
 For the rest of the article, we will explore each of these items in detail.
 
-### Streaming Server-Side Rendering
+#### Streaming Server-Side Rendering
 
 Streaming SSR tries to solve the first of the three problems. ie, You have to fetch everything before you can show anything. In Streaming SSR, HTML and relevent inline javascript can be streamed to the client. What this means is, we can send a a chunk of HTML as soon as it is ready. And have place holders of the sections that may take more time to be ready. Then, when the section is ready, stream it to the client with some in line javacsript so that it is populated in the right place.
 This will make the Fisrt Contentful Paint even faster for the SSR. And the hydration can start as soon as the first chunk of HTML is ready. So part of the page will become intercative much earlier, compared to the regular SSR.
 
-### Progressive (and selective) Re-Hydration
+#### Progressive (and selective) Re-Hydration
 
 Progressive hydration is another way to reduce the TTI in SSR. Here the trick is to hydrate the page before all the code has loaded. Instead of hydrating all the nodes at one go, we re-hydrate the nodes progressively, using certain conditions. For example, we may only hydrate the nodes that are visible in the viewport.Or we may hydrate the node that has a higher probabilty of getting clicked first.
 
@@ -86,17 +86,17 @@ In order to do that, we will have to split our js bundle into multiple chunks an
 
 In React, the “hydrate” method from the react-dom is used to implement progressive hydration. React.lazy and Suspense are the other two features that will help with progressive Re-Hydration.
 
-### Trisomorphic Rendering
+#### Trisomorphic Rendering
 
 In this technique, initial rendering is done with Streaming SSR. Subsequent rendering happens through service workers for navigation links. ie, When the user navigates to a new view, that view is loaded from the service worker instead of the server. The service worker will fetch and cache this view while the initial view was getting installed.
 
 In order for this to work, the client, server, and service worker should all use the same routing and templating.
 
-### Island Architecture
+#### Island Architecture
 
 We have looked at Island Architecture in a previous Article. Here we render HTML pages in the server and inject slots in them that can be hydrated in the client. In frameworks like astro, we can also use static rendering (compile time) with slots for “islands” of interactivity that can be hydrated in the client. Here we don’t have any re-hydration at all. The static parts that come from the server, do not have any interactive bits. So they remain static. The islands are entirely hydrated in the client, like in the case of CSR. That is why Jason Miller described it as <a href="https://jasonformat.com/islands-architecture/#:~:text=The%20general%20idea%20of%20an,output%20from%20their%20corresponding%20widget." target="_blank">“progressive hydration for free”.</a>
 
-### Conclusion
+## Conclusion
 
 We looked at what hydration is and why it is necessery. We looked at the cost and limitations of hydration and different hydration techniques that helps us overcome these problems. Finally, there are frameworks that does SSR with out any hydration. For example qwik does it by being <a href='https://qwik.builder.io/docs/concepts/resumable/' target='_blank'>resumable</a> instead of replayable.
 
