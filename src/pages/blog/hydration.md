@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Hydration and Rendering"
 description: "A brief introduction to various hydration techniques in the web."
 pubDate: "Nov 22 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/ssr-waterfall.png"
 ---
 
 ## Introduction
