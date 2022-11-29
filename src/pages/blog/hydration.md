@@ -12,7 +12,7 @@ In this post, we take a brief look at the various type of “rehydration” tech
 
 ### Server Rendering
 
-A decade ago, the majority of web pages in the web were server-rendered. By rendering we mean the process of getting the data necessary for that particular page and then constructing the page using the HTML, by adding the data to the HTML template for the page. In server rendering (old school rails, PHP, asp.net etc), the server-side code gets the data from the database, uses that data to create an HMTL page and sends that HTML back to the user. When a user needs more data, a new request is made, the entire page is again sent back (with new data) to the browser and as result the page reloads. This is how things worked a while ago.
+A decade ago, the majority of web pages in the web were server-rendered. By rendering we mean the process  constructing the HTML page, with the data that user needs. In server rendering (old school rails, PHP, asp.net etc), the server-side code gets the data from the database, uses that data to create an HMTL page and sends that HTML back to the user. When a user needs more data, a new request is made, the entire page is again sent back (with new data) to the browser and as result the page reloads. This is how things worked a while ago.
 
 ### Client Side Rendering
 
