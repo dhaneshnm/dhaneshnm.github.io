@@ -21,6 +21,8 @@ I wanted to improve it by adding a UI. This would help me to add or remove urls 
 
 Gpt refactored its earlier code to addd an HTML file and javascript file. Now the urls will be stored in local storage and we can add or remove it from the options page of the extention. Nothing dramatic. But I am quite pleased to see that we can build something start to end with GPT.
 
+<img src="/blocksite.png" alt="UI of the block site app" />
+
 I added some CSS and saved the code in a github repo. You can see it <a href='https://github.com/dhaneshnm/blocksite' target="_blank">here</a>. I guess, if we set up an AI agent, it can commit and deploy the code too.
 
 So we really don't need a Software Engineer to build an app any more. AI can do it all by it self.
