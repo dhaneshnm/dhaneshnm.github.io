@@ -1,7 +1,7 @@
 ---
 layout: "../../layouts/BlogPost.astro"
-title: "I build something useful with chat GTP"
-description: "The big ball of mud: Paper summary"
+title: "I built something useful with chat GTP"
+description: "A little expirement on building apps start to end with AI."
 pubDate: "Jan 24 2025"
 heroImage: "/placeholder-hero.jpg"
 ---
