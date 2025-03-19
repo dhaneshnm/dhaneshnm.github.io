@@ -6,7 +6,7 @@ pubDate: "Jan 27 2025"
 heroImage: "/placeholder-hero.jpg"
 ---
 
-Extreme Programming(XP) is an agile software development methodology. It has lot of reccomendation for all parts of Software development life cycle. For this post let us focus on the "developement" part of the life cycle. On development phase XP recommends the following:
+Extreme Programming(XP) is an agile software development methodology. It has a lot of reccomendation for all parts of Software development life cycle. For this post let us focus on the "developement" part of the life cycle. On development phase XP recommends the following:
 
 1. Pair Programming: Two developers work together on the same piece of code—one writes while the other reviews.
 2. Test-Driven Development (TDD): Writing automated tests before writing the actual code.
