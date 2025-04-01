@@ -5,8 +5,7 @@ description: "Aboute me text."
 updatedDate: "1 April 2025"
 ---
 ## Contact  
-**Email:** [dneelamana@gmail.com](mailto:dneelamana@gmail.com)  
-**Address:** College Station, Texas  
+ **Address:** College Station, Texas  
 
 ---
 
