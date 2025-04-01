@@ -1,0 +1,25 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <h3>Social Media</h3>
+    <main>
+      <ul>
+        <li><a href="https://twitter.com/dneelamana" target="_blank">Twitter</a></li>
+        <li><a href="https://github.com/dhaneshnm" target="_blank">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/" target="_blank">LinkedIn</a></li>
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>
