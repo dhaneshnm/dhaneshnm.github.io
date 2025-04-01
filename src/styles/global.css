@@ -94,7 +94,6 @@ img {
 code {
   font-family: monospace;
   padding: 2px;
-  background-color: var(--code-background-color);
   color: var(--code-color);
   border-radius: 3px;
 }
@@ -126,7 +125,6 @@ footer {
 .highlight,
 .code {
   padding: 1px 15px;
-  background-color: var(--code-background-color);
   color: var(--code-color);
   border-radius: 3px;
   margin-block-start: 1em;
