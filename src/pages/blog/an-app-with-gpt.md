@@ -1,6 +1,6 @@
 ---
 layout: "../../layouts/BlogPost.astro"
-title: "I built something useful with chat GTP"
+title: "I built something useful with chat GPT"
 description: "A little expirement on building apps start to end with AI."
 pubDate: "Jan 24 2025"
 heroImage: "/placeholder-hero.jpg"
