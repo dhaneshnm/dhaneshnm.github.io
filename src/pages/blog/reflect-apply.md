@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Reflect.apply"
 description: "Apply method in Reflect"
 pubDate: "Oct 30 2022"
-heroImage: "/hero2.jpg"
+heroImage: "/hero2.png"
 ---
 
 Reflect is a built in global object in JavaScript. It was introduced in ES6 along with Proxy. In this post, we look into the Reflect.apply method.

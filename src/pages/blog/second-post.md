@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Grokking Simplicity (Notes)"
 description: "Grokking Simplicity (Notes)"
 pubDate: "Jul 18 2022"
-heroImage: "/hero2.jpg"
+heroImage: "/hero2.png"
 ---
 
 A few weeks ago, I finsihed reading the book [Grokking Simplicity](https://www.manning.com/books/grokking-simplicity). It is a very good read for anyone who wants to get a better grasp on functional programming, with out going too much in to low level details.

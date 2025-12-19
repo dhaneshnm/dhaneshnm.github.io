@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Extreme programming with an AI agent"
 description: "A thought expirement on the design of an AI agent that can build useful software."
 pubDate: "Jan 27 2025"
-heroImage: "/hero2.jpg"
+heroImage: "/hero2.png"
 ---
 
 Extreme Programming(XP) is an agile software development methodology. It has a lot of reccomendation for all parts of Software development life cycle. For this post let us focus on the "developement" part of the life cycle. On development phase XP recommends the following:
