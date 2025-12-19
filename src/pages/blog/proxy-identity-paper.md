@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "On Proxy identity crisis : Paper summary"
 description: "On Proxy identity crisis : Paper summary"
 pubDate: "Nov 6 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 I came across this paper while looking up materials to better understand Javascript Proxy API. Here are some notes I made while reading the paper.

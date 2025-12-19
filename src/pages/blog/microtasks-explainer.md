@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Microtasks and queueMicrotask"
 description: "A short guide on microtasks"
 pubDate: "Nov 19 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 Let us say, on our web page we have a form with submit button. And we have an “OnSubmit” callback associated with the submit button. Within the “OnSubmit” we have a network call that sends the form data to a server and waits for a response. This being an asynchronous operation we use a promise here. The promise gets resolved upon getting the response from the server. We display a “Success” or “Failure” message based on the response.

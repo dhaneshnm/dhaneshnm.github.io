@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Top level await"
 description: "Top level await"
 pubDate: "Nov 14 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 <a href='https://github.com/tc39/proposal-top-level-await' target='_blank'>Top level await</a> is a new feature added to javascript in ES2022.We have been using async … await syntax for a while in JS. With that, await was only available with functions that were marked with the ‘async’ keyword. With top-level await, we can use await at the module level.

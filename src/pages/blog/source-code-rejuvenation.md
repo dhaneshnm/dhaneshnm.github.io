@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Source Code Rejuvenation is not refactoring: Paper summary"
 description: "Source Code Rejuvenation is not refactoringd: Paper summary"
 pubDate: "Oct 20 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 Whenever I had to work on projects with old/legacy code, I eventually run in to the following situation. The engineers often complain about the outdated dependencies and out dated coding patterns in the code base. They then come up with wish list of things to “migrate” and then try to convince the management and the product team to allocate time for it. From the product team’s perspective they are fixing a bug or developing a feature, so they can’t seem to find value in this exercise.

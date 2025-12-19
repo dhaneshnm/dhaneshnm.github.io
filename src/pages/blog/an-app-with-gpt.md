@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "I built something useful with chat GPT"
 description: "A little expirement on building apps start to end with AI."
 pubDate: "Jan 24 2025"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.png"
 ---
 
 I have been using GPT through github copilot since it was available on beta (2022 ?). It was little more than an annoyance initially. The LLMs has become much better with coding since. Now with the rise of reasonling AI, some say that we won't need software engineers as much as we used to. AI would really do the coding for us.

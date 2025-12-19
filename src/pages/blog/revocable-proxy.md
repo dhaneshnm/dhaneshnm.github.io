@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Revocable References"
 description: "Revocable References using Proxy API"
 pubDate: "Nov 4 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 In this post we look in to the idea of revokable references and how to implement them with proxies.

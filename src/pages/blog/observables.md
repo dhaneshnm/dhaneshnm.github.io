@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Observables/Observer pattern in Javascript"
 description: "Various ways to implement observables in JavaScript."
 pubDate: "Nov 5 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 Observer pattern is a well known design pattern. In this post we look in to couple of different ways to implement Observer pattern in Javascript.

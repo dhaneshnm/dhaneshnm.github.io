@@ -3,7 +3,7 @@ layout: "../../layouts/BlogPost.astro"
 title: "Island Architecture"
 description: "Island Architecture"
 pubDate: "Oct 18 2022"
-heroImage: "/placeholder-hero.jpg"
+heroImage: "/hero2.jpg"
 ---
 
 # Island Architecture
