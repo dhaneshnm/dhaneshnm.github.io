@@ -1,9 +1,9 @@
 ---
-const title = "Dhanesh Neela Mana — 12 apps in 12 months";
+const title = "Dhanesh Neela Mana — Learning & development software";
 const description =
-  "Solo founder building one new learning & education app every month, August 2026 through July 2027. Public scoreboard, written bets, and kill notes.";
+  "Solo founder building learning and development software — tools that help people build real skills and make them stick. 18 years across banking, sports tech, Amazon, EPFL neuroscience, Swiss media, and an AI startup as CTO.";
 const ogDescription =
-  "One new learning & education app every month. Public scoreboard, written bets, and kill notes.";
+  "Solo founder building learning and development software — skills that show up in the work, not content that just gets marked done.";
 const canonical = "https://dneelamana.com/";
 ---
 
@@ -173,108 +173,6 @@ const canonical = "https://dneelamana.com/";
         margin-top: 14px;
       }
 
-      /* ---------- Scoreboard ---------- */
-      .scoreboard {
-        border-top: 1px solid var(--line);
-        padding: 40px 0 56px;
-      }
-      .scoreboard-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 28px;
-      }
-      .scoreboard-head h2 {
-        font-family: "Archivo", sans-serif;
-        font-weight: 800;
-        font-size: 1.7rem;
-        letter-spacing: -0.01em;
-      }
-      .tally {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.8rem;
-        color: var(--ink-soft);
-        letter-spacing: 0.04em;
-      }
-
-      .ledger {
-        border-top: 2px solid var(--ink);
-      }
-      .row {
-        display: grid;
-        grid-template-columns: 52px 110px 1fr 110px;
-        gap: 16px;
-        align-items: baseline;
-        padding: 16px 0;
-        border-bottom: 1px solid var(--line);
-      }
-      .row-num {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--ink);
-      }
-      .row-date {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.8rem;
-        color: var(--ink-soft);
-      }
-      .row-app {
-        font-size: 1rem;
-      }
-      .row-app .app-name {
-        font-weight: 700;
-      }
-      .row-app .app-desc {
-        color: var(--ink-soft);
-      }
-      .row.empty .row-app {
-        color: var(--line-strong);
-      }
-      .status {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        justify-self: end;
-      }
-      .status.queued {
-        color: var(--build);
-      }
-      .status.shipped {
-        color: var(--ship);
-      }
-      .status.building {
-        color: var(--build);
-      }
-      .status.killed {
-        color: var(--kill);
-      }
-      .status.tbd {
-        color: var(--line-strong);
-      }
-      .row.killed .app-name {
-        text-decoration: line-through;
-        text-decoration-color: var(--kill);
-      }
-      .kill-note {
-        display: block;
-        margin-top: 4px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.78rem;
-        color: var(--kill);
-      }
-
-      .ledger-note {
-        margin-top: 20px;
-        font-size: 0.9rem;
-        color: var(--ink-soft);
-        max-width: 620px;
-      }
-
       /* ---------- About ---------- */
       .about {
         border-top: 1px solid var(--line);
@@ -336,7 +234,6 @@ const canonical = "https://dneelamana.com/";
       @media (prefers-reduced-motion: no-preference) {
         .hero,
         .rules,
-        .scoreboard,
         .about,
         .follow {
           animation: rise 0.5s ease both;
@@ -344,14 +241,11 @@ const canonical = "https://dneelamana.com/";
         .rules {
           animation-delay: 0.06s;
         }
-        .scoreboard {
+        .about {
           animation-delay: 0.12s;
         }
-        .about {
-          animation-delay: 0.18s;
-        }
         .follow {
-          animation-delay: 0.24s;
+          animation-delay: 0.18s;
         }
         @keyframes rise {
           from {
@@ -372,26 +266,6 @@ const canonical = "https://dneelamana.com/";
         .follow-grid {
           grid-template-columns: 1fr;
           gap: 12px;
-        }
-        .row {
-          grid-template-columns: 44px 1fr 90px;
-          grid-template-areas:
-            "num app status"
-            "num date status";
-          row-gap: 2px;
-        }
-        .row-num {
-          grid-area: num;
-        }
-        .row-app {
-          grid-area: app;
-        }
-        .row-date {
-          grid-area: date;
-        }
-        .status {
-          grid-area: status;
-          align-self: start;
         }
         .hero {
           padding: 56px 0 40px;

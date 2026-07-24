@@ -1,8 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import { scoreboard, statusLabel, tally } from "../data/scoreboard";
-
-const t = tally();
 ---
 
 <Base>
@@ -27,93 +24,34 @@ const t = tally();
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="eyebrow">
-          Solo founder · Learning &amp; education · Aug 2026 — Jul 2027
-        </p>
-        <h1>One app a month.<br />Twelve months.</h1>
+        <p class="eyebrow">Solo founder · Learning &amp; development</p>
+        <h1>Building for how<br />people learn.</h1>
         <p>
           After 18 years building software for other people — banks, sports
           tech, Amazon, brain research at EPFL, Swiss media, and an AI startup as
-          CTO and co-founder — I'm building my own. One new learning &amp;
-          education app every month. This page is the scoreboard.
+          CTO and co-founder — I'm building my own. The focus is learning and
+          development: tools that help people build real skills and make them
+          stick.
         </p>
       </div>
     </section>
 
     <section class="rules">
       <div class="wrap rules-grid">
-        <div class="section-label">The rules</div>
+        <div class="section-label">The focus</div>
         <div>
           <p>
-            Every app starts with a written bet before the first commit: who it's
-            for, which channel reaches them, what traction means as a number, and
-            a kill-by date.
+            I build learning and development software — the tools people use to
+            train, upskill, and grow. My bar is behavior change, not completion:
+            learning that shows up in the work, not content that just gets marked
+            done.
           </p>
           <p>
-            At the end of each month, the app is judged against its bet — not
-            against how I feel about it. It either earns another month or gets
-            killed with a public note. No exceptions for ideas I love.
+            Eighteen years across banking, sports, big tech, and neuroscience
+            taught me how people actually pick things up — and how much software
+            gets in the way. That's the gap I'm building into.
           </p>
         </div>
-      </div>
-    </section>
-
-    <section class="scoreboard">
-      <div class="wrap">
-        <div class="scoreboard-head">
-          <h2>The scoreboard</h2>
-          <span class="tally"
-            >{t.shipped} shipped · {t.killed} killed · {t.toGo} to go</span
-          >
-        </div>
-        <div class="ledger">
-          {
-            scoreboard.map((e) => {
-              const rowNum = String(e.month).padStart(2, "0");
-              const isEmpty = e.app === null;
-              const rowClass = [
-                "row",
-                isEmpty ? "empty" : "",
-                e.status === "killed" ? "killed" : "",
-              ]
-                .filter(Boolean)
-                .join(" ");
-              return (
-                <div class={rowClass}>
-                  <span class="row-num">{rowNum}</span>
-                  <span class="row-date">{e.date}</span>
-                  <span class="row-app">
-                    {isEmpty ? (
-                      "—"
-                    ) : (
-                      <>
-                        {e.status === "shipped" && e.link ? (
-                          <a class="app-name" href={e.link}>
-                            {e.app}
-                          </a>
-                        ) : (
-                          <span class="app-name">{e.app}</span>
-                        )}
-                        {e.desc && <span class="app-desc"> — {e.desc}</span>}
-                        {e.status === "killed" && e.killNote && (
-                          <span class="kill-note">{e.killNote}</span>
-                        )}
-                      </>
-                    )}
-                  </span>
-                  <span class={`status ${e.status}`}>
-                    {statusLabel[e.status]}
-                  </span>
-                </div>
-              );
-            })
-          }
-        </div>
-        <p class="ledger-note">
-          Statuses are judged against each app's written traction threshold. Kill
-          notes stay up. This page updates at every month's review — if it goes
-          stale, call me on it.
-        </p>
       </div>
     </section>
 
@@ -144,8 +82,8 @@ const t = tally();
         <div class="section-label">Follow along</div>
         <div>
           <p>
-            I build in public. X for the day-to-day, Substack for the monthly
-            write-ups and kill notes.
+            I build in public. X for the day-to-day, Substack for the longer
+            write-ups.
           </p>
           <ul class="link-list">
             <li><a href="https://twitter.com/dneelamana">X — @dneelamana</a></li>
@@ -165,7 +103,7 @@ const t = tally();
   <footer>
     <div class="wrap footer-inner">
       <span>© 2026 Dhanesh Neela Mana</span>
-      <span>Updated at each month's review</span>
+      <span>College Station, Texas</span>
     </div>
   </footer>
 </Base>
