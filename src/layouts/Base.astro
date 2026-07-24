@@ -1,0 +1,405 @@
+---
+const title = "Dhanesh Neela Mana — 12 apps in 12 months";
+const description =
+  "Solo founder building one new learning & education app every month, August 2026 through July 2027. Public scoreboard, written bets, and kill notes.";
+const ogDescription =
+  "One new learning & education app every month. Public scoreboard, written bets, and kill notes.";
+const canonical = "https://dneelamana.com/";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --paper: #fbfbf8;
+        --ink: #1c1e1d;
+        --ink-soft: #5c615e;
+        --line: #e2e3dc;
+        --line-strong: #c9cbc2;
+        --ship: #177245;
+        --build: #9a5b00;
+        --kill: #b3261e;
+        --maxw: 860px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+        font-size: 17px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+      a:hover {
+        text-decoration-thickness: 2.5px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 3px;
+        border-radius: 1px;
+      }
+
+      .mono {
+        font-family: "IBM Plex Mono", monospace;
+      }
+
+      /* ---------- Header ---------- */
+      header {
+        border-bottom: 1px solid var(--line);
+      }
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 20px 0;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .wordmark {
+        font-family: "IBM Plex Mono", monospace;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      nav ul {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+      }
+      nav a {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        color: var(--ink-soft);
+      }
+      nav a:hover {
+        color: var(--ink);
+        text-decoration: underline;
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        padding: 88px 0 56px;
+      }
+      .eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Archivo", sans-serif;
+        font-weight: 900;
+        font-size: clamp(2.6rem, 7vw, 4.4rem);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        margin-bottom: 28px;
+      }
+      .hero p {
+        max-width: 620px;
+        font-size: 1.1rem;
+        color: var(--ink);
+      }
+
+      /* ---------- Rules ---------- */
+      .rules {
+        border-top: 1px solid var(--line);
+        padding: 40px 0;
+      }
+      .rules-grid {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 24px;
+      }
+      .section-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        padding-top: 4px;
+      }
+      .rules p {
+        max-width: 620px;
+      }
+      .rules p + p {
+        margin-top: 14px;
+      }
+
+      /* ---------- Scoreboard ---------- */
+      .scoreboard {
+        border-top: 1px solid var(--line);
+        padding: 40px 0 56px;
+      }
+      .scoreboard-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .scoreboard-head h2 {
+        font-family: "Archivo", sans-serif;
+        font-weight: 800;
+        font-size: 1.7rem;
+        letter-spacing: -0.01em;
+      }
+      .tally {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--ink-soft);
+        letter-spacing: 0.04em;
+      }
+
+      .ledger {
+        border-top: 2px solid var(--ink);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 52px 110px 1fr 110px;
+        gap: 16px;
+        align-items: baseline;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .row-num {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .row-date {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--ink-soft);
+      }
+      .row-app {
+        font-size: 1rem;
+      }
+      .row-app .app-name {
+        font-weight: 700;
+      }
+      .row-app .app-desc {
+        color: var(--ink-soft);
+      }
+      .row.empty .row-app {
+        color: var(--line-strong);
+      }
+      .status {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        justify-self: end;
+      }
+      .status.queued {
+        color: var(--build);
+      }
+      .status.shipped {
+        color: var(--ship);
+      }
+      .status.building {
+        color: var(--build);
+      }
+      .status.killed {
+        color: var(--kill);
+      }
+      .status.tbd {
+        color: var(--line-strong);
+      }
+      .row.killed .app-name {
+        text-decoration: line-through;
+        text-decoration-color: var(--kill);
+      }
+      .kill-note {
+        display: block;
+        margin-top: 4px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--kill);
+      }
+
+      .ledger-note {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: var(--ink-soft);
+        max-width: 620px;
+      }
+
+      /* ---------- About ---------- */
+      .about {
+        border-top: 1px solid var(--line);
+        padding: 40px 0;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 24px;
+      }
+      .about p {
+        max-width: 620px;
+      }
+      .about p + p {
+        margin-top: 14px;
+      }
+
+      /* ---------- Follow ---------- */
+      .follow {
+        border-top: 1px solid var(--line);
+        padding: 40px 0 64px;
+      }
+      .follow-grid {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 24px;
+      }
+      .follow p {
+        max-width: 620px;
+        margin-bottom: 20px;
+      }
+      .link-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 28px;
+        list-style: none;
+      }
+      .link-list a {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+      }
+
+      /* ---------- Footer ---------- */
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 24px 0 48px;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--ink-soft);
+      }
+
+      /* ---------- Motion ---------- */
+      @media (prefers-reduced-motion: no-preference) {
+        .hero,
+        .rules,
+        .scoreboard,
+        .about,
+        .follow {
+          animation: rise 0.5s ease both;
+        }
+        .rules {
+          animation-delay: 0.06s;
+        }
+        .scoreboard {
+          animation-delay: 0.12s;
+        }
+        .about {
+          animation-delay: 0.18s;
+        }
+        .follow {
+          animation-delay: 0.24s;
+        }
+        @keyframes rise {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      }
+
+      /* ---------- Mobile ---------- */
+      @media (max-width: 640px) {
+        .rules-grid,
+        .about-grid,
+        .follow-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .row {
+          grid-template-columns: 44px 1fr 90px;
+          grid-template-areas:
+            "num app status"
+            "num date status";
+          row-gap: 2px;
+        }
+        .row-num {
+          grid-area: num;
+        }
+        .row-app {
+          grid-area: app;
+        }
+        .row-date {
+          grid-area: date;
+        }
+        .status {
+          grid-area: status;
+          align-self: start;
+        }
+        .hero {
+          padding: 56px 0 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

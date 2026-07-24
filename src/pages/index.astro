@@ -1,24 +1,171 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+import Base from "../layouts/Base.astro";
+import { scoreboard, statusLabel, tally } from "../data/scoreboard";
+
+const t = tally();
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body>
-    <Header title={SITE_TITLE} />
-    <main>
-      <h1>🤚 Hello, There!🤚</h1>
-      <p>I am Dhanesh Neela Mana. Welcome to my personal website.</p>
-      <p>I occasionally write about Software Engineering in my <a href="/blog" target="_blank">blog</a>. I also have a <a href="https://dhaneshneelamana.substack.com/">newsletter</a> where I write my personal essays.</p>
-      <p> Checkout my <a href="/about" target="_blank">about</a> page to read my brief bio. </p>
-      <p></p>
-    </main>
-    <Footer />
-  </body>
-</html>
+<Base>
+  <header>
+    <div class="wrap header-inner">
+      <a class="wordmark" href="/">Dhanesh Neela Mana</a>
+      <nav aria-label="Social links">
+        <ul>
+          <li><a href="https://twitter.com/dneelamana">X</a></li>
+          <li>
+            <a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/"
+              >LinkedIn</a
+            >
+          </li>
+          <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
+          <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">
+          Solo founder · Learning &amp; education · Aug 2026 — Jul 2027
+        </p>
+        <h1>One app a month.<br />Twelve months.</h1>
+        <p>
+          After 18 years building software for other people — banks, sports
+          tech, Amazon, brain research at EPFL, Swiss media, and an AI startup as
+          CTO and co-founder — I'm building my own. One new learning &amp;
+          education app every month. This page is the scoreboard.
+        </p>
+      </div>
+    </section>
+
+    <section class="rules">
+      <div class="wrap rules-grid">
+        <div class="section-label">The rules</div>
+        <div>
+          <p>
+            Every app starts with a written bet before the first commit: who it's
+            for, which channel reaches them, what traction means as a number, and
+            a kill-by date.
+          </p>
+          <p>
+            At the end of each month, the app is judged against its bet — not
+            against how I feel about it. It either earns another month or gets
+            killed with a public note. No exceptions for ideas I love.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scoreboard">
+      <div class="wrap">
+        <div class="scoreboard-head">
+          <h2>The scoreboard</h2>
+          <span class="tally"
+            >{t.shipped} shipped · {t.killed} killed · {t.toGo} to go</span
+          >
+        </div>
+        <div class="ledger">
+          {
+            scoreboard.map((e) => {
+              const rowNum = String(e.month).padStart(2, "0");
+              const isEmpty = e.app === null;
+              const rowClass = [
+                "row",
+                isEmpty ? "empty" : "",
+                e.status === "killed" ? "killed" : "",
+              ]
+                .filter(Boolean)
+                .join(" ");
+              return (
+                <div class={rowClass}>
+                  <span class="row-num">{rowNum}</span>
+                  <span class="row-date">{e.date}</span>
+                  <span class="row-app">
+                    {isEmpty ? (
+                      "—"
+                    ) : (
+                      <>
+                        {e.status === "shipped" && e.link ? (
+                          <a class="app-name" href={e.link}>
+                            {e.app}
+                          </a>
+                        ) : (
+                          <span class="app-name">{e.app}</span>
+                        )}
+                        {e.desc && <span class="app-desc"> — {e.desc}</span>}
+                        {e.status === "killed" && e.killNote && (
+                          <span class="kill-note">{e.killNote}</span>
+                        )}
+                      </>
+                    )}
+                  </span>
+                  <span class={`status ${e.status}`}>
+                    {statusLabel[e.status]}
+                  </span>
+                </div>
+              );
+            })
+          }
+        </div>
+        <p class="ledger-note">
+          Statuses are judged against each app's written traction threshold. Kill
+          notes stay up. This page updates at every month's review — if it goes
+          stale, call me on it.
+        </p>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="wrap about-grid">
+        <div class="section-label">About</div>
+        <div>
+          <p>
+            I'm Dhanesh Neela Mana. I've built software since 2008: .NET banking
+            systems at TCS, recruiting products used by 100,000 athletes at Front
+            Rush, front-end at Amazon, semantic search for brain research at
+            EPFL, and a legacy-platform rescue at Tamedia in Switzerland that I'm
+            still proud of. Most recently I was CTO and co-founder of an AI
+            startup, where I built a voice-first roleplay training product end to
+            end.
+          </p>
+          <p>
+            Every side project I've ever loved was about learning — flashcards,
+            e-book tools, teaching apps. Now it's the main project. I live in
+            College Station, Texas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="follow">
+      <div class="wrap follow-grid">
+        <div class="section-label">Follow along</div>
+        <div>
+          <p>
+            I build in public. X for the day-to-day, Substack for the monthly
+            write-ups and kill notes.
+          </p>
+          <ul class="link-list">
+            <li><a href="https://twitter.com/dneelamana">X — @dneelamana</a></li>
+            <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+            <li>
+              <a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/"
+                >LinkedIn</a
+              >
+            </li>
+            <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Dhanesh Neela Mana</span>
+      <span>Updated at each month's review</span>
+    </div>
+  </footer>
+</Base>

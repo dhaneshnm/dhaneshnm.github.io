@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhanesh Neela Mana — 12 apps in 12 months</title>
+<meta name="description" content="Solo founder building one new learning & education app every month, August 2026 through July 2027. Public scoreboard, written bets, and kill notes.">
+<meta property="og:title" content="Dhanesh Neela Mana — 12 apps in 12 months">
+<meta property="og:description" content="One new learning & education app every month. Public scoreboard, written bets, and kill notes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dneelamana.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBFBF8;
+    --ink: #1C1E1D;
+    --ink-soft: #5C615E;
+    --line: #E2E3DC;
+    --line-strong: #C9CBC2;
+    --ship: #177245;
+    --build: #9A5B00;
+    --kill: #B3261E;
+    --maxw: 860px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  a:hover { text-decoration-thickness: 2.5px; }
+  a:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 20px 0;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .wordmark {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+  nav a:hover { color: var(--ink); text-decoration: underline; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 88px 0 56px; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .hero p {
+    max-width: 620px;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  /* ---------- Rules ---------- */
+  .rules {
+    border-top: 1px solid var(--line);
+    padding: 40px 0;
+  }
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+  }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+  .rules p { max-width: 620px; }
+  .rules p + p { margin-top: 14px; }
+
+  /* ---------- Scoreboard ---------- */
+  .scoreboard {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 56px;
+  }
+  .scoreboard-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .scoreboard-head h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    letter-spacing: -0.01em;
+  }
+  .tally {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .ledger { border-top: 2px solid var(--ink); }
+  .row {
+    display: grid;
+    grid-template-columns: 52px 110px 1fr 110px;
+    gap: 16px;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .row-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .row-app { font-size: 1rem; }
+  .row-app .app-name { font-weight: 700; }
+  .row-app .app-desc { color: var(--ink-soft); }
+  .row.empty .row-app { color: var(--line-strong); }
+  .status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    justify-self: end;
+  }
+  .status.queued  { color: var(--build); }
+  .status.shipped { color: var(--ship); }
+  .status.building{ color: var(--build); }
+  .status.killed  { color: var(--kill); }
+  .status.tbd     { color: var(--line-strong); }
+  .row.killed .app-name { text-decoration: line-through; text-decoration-color: var(--kill); }
+
+  .ledger-note {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    max-width: 620px;
+  }
+
+  /* ---------- About ---------- */
+  .about {
+    border-top: 1px solid var(--line);
+    padding: 40px 0;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+  }
+  .about p { max-width: 620px; }
+  .about p + p { margin-top: 14px; }
+
+  /* ---------- Follow ---------- */
+  .follow {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 64px;
+  }
+  .follow-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+  }
+  .follow p { max-width: 620px; margin-bottom: 20px; }
+  .link-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    list-style: none;
+  }
+  .link-list a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px 0 48px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Motion ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero, .rules, .scoreboard, .about, .follow {
+      animation: rise 0.5s ease both;
+    }
+    .rules     { animation-delay: 0.06s; }
+    .scoreboard{ animation-delay: 0.12s; }
+    .about     { animation-delay: 0.18s; }
+    .follow    { animation-delay: 0.24s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 640px) {
+    .rules-grid, .about-grid, .follow-grid { grid-template-columns: 1fr; gap: 12px; }
+    .row {
+      grid-template-columns: 44px 1fr 90px;
+      grid-template-areas:
+        "num app status"
+        "num date status";
+      row-gap: 2px;
+    }
+    .row-num  { grid-area: num; }
+    .row-app  { grid-area: app; }
+    .row-date { grid-area: date; }
+    .status   { grid-area: status; align-self: start; }
+    .hero { padding: 56px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a class="wordmark" href="/">Dhanesh Neela Mana</a>
+    <nav aria-label="Social links">
+      <ul>
+        <li><a href="https://twitter.com/dneelamana">X</a></li>
+        <li><a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/">LinkedIn</a></li>
+        <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
+        <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Solo founder · Learning &amp; education · Aug 2026 — Jul 2027</p>
+      <h1>One app a month.<br>Twelve months.</h1>
+      <p>After 18 years building software for other people — banks, sports tech, Amazon, brain research at EPFL, Swiss media, and an AI startup as CTO and co-founder — I'm building my own. One new learning &amp; education app every month. This page is the scoreboard.</p>
+    </div>
+  </section>
+
+  <section class="rules">
+    <div class="wrap rules-grid">
+      <div class="section-label">The rules</div>
+      <div>
+        <p>Every app starts with a written bet before the first commit: who it's for, which channel reaches them, what traction means as a number, and a kill-by date.</p>
+        <p>At the end of each month, the app is judged against its bet — not against how I feel about it. It either earns another month or gets killed with a public note. No exceptions for ideas I love.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="scoreboard">
+    <div class="wrap">
+      <div class="scoreboard-head">
+        <h2>The scoreboard</h2>
+        <span class="tally">0 shipped · 0 killed · 12 to go</span>
+      </div>
+      <div class="ledger">
+        <div class="row">
+          <span class="row-num">01</span>
+          <span class="row-date">Aug 2026</span>
+          <span class="row-app"><span class="app-name">App #1</span> <span class="app-desc">— announced August 1, with its bet.</span></span>
+          <span class="status queued">Queued</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">02</span>
+          <span class="row-date">Sep 2026</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">03</span>
+          <span class="row-date">Oct 2026</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">04</span>
+          <span class="row-date">Nov 2026</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">05</span>
+          <span class="row-date">Dec 2026</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">06</span>
+          <span class="row-date">Jan 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">07</span>
+          <span class="row-date">Feb 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">08</span>
+          <span class="row-date">Mar 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">09</span>
+          <span class="row-date">Apr 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">10</span>
+          <span class="row-date">May 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">11</span>
+          <span class="row-date">Jun 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+        <div class="row empty">
+          <span class="row-num">12</span>
+          <span class="row-date">Jul 2027</span>
+          <span class="row-app">—</span>
+          <span class="status tbd">·</span>
+        </div>
+      </div>
+      <p class="ledger-note">Statuses are judged against each app's written traction threshold. Kill notes stay up. This page updates at every month's review — if it goes stale, call me on it.</p>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="section-label">About</div>
+      <div>
+        <p>I'm Dhanesh Neela Mana. I've built software since 2008: .NET banking systems at TCS, recruiting products used by 100,000 athletes at Front Rush, front-end at Amazon, semantic search for brain research at EPFL, and a legacy-platform rescue at Tamedia in Switzerland that I'm still proud of. Most recently I was CTO and co-founder of an AI startup, where I built a voice-first roleplay training product end to end.</p>
+        <p>Every side project I've ever loved was about learning — flashcards, e-book tools, teaching apps. Now it's the main project. I live in College Station, Texas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="follow">
+    <div class="wrap follow-grid">
+      <div class="section-label">Follow along</div>
+      <div>
+        <p>I build in public. X for the day-to-day, Substack for the monthly write-ups and kill notes.</p>
+        <ul class="link-list">
+          <li><a href="https://twitter.com/dneelamana">X — @dneelamana</a></li>
+          <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+          <li><a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/">LinkedIn</a></li>
+          <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Dhanesh Neela Mana</span>
+    <span>Updated at each month's review</span>
+  </div>
+</footer>
+
+</body>
+</html>
