@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!-- Source for public/og.png (1200x630). Regenerate with scripts/og-shot.mjs. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Atkinson+Hyperlegible:wght@400&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #FBFBF8;
+    --ink: #1C1E1D;
+    --ink-soft: #5C615E;
+    --line: #E2E3DC;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--paper); }
+  .card {
+    width: 1200px;
+    height: 630px;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    -webkit-font-smoothing: antialiased;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .middle { display: flex; flex-direction: column; gap: 22px; }
+  .rule { width: 96px; height: 2px; background: var(--line); }
+  .name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 92px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .tag {
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 34px;
+    color: var(--ink-soft);
+  }
+  .foot {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="eyebrow">Solo founder · Learning &amp; education</div>
+    <div class="middle">
+      <div class="rule"></div>
+      <div class="name">Dhanesh Neela Mana</div>
+      <div class="tag">Building for how people learn.</div>
+    </div>
+    <div class="foot">dneelamana.com</div>
+  </div>
+</body>
+</html>
