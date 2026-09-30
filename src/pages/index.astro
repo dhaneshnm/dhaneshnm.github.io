@@ -1,16 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 
-// "Now" section. Update the date and lines together, roughly monthly.
-// Lines marked TODO(Dhanesh) render on the page on purpose; replace them.
+// "Now" section. Update the date and text together, roughly monthly.
 const nowUpdated = "Sep 2026";
-const now = [
-  "TODO(Dhanesh): October app line",
-  "Writing on LinkedIn about building software in the LLM era.",
-  "TODO(Dhanesh): who you want to talk to",
-  "TODO(Dhanesh): Tondo status after the Sep 30 review (live or closed)",
-];
-
 const linkedin = "https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/";
 const x = "https://x.com/dneelamana";
 const substack = "https://dhaneshneelamana.substack.com";
@@ -91,9 +83,18 @@ const timeline = [
     <section class="rail" id="now">
       <div class="wrap rail-grid">
         <div class="label">Now<small>Updated {nowUpdated}</small></div>
-        <ul class="now-list">
-          {now.map((line) => <li>{line}</li>)}
-        </ul>
+        <div>
+          <p>
+            In 2013 a Sal Khan talk pointed me at Benjamin Bloom's 1984 finding:
+            students tutored one-on-one did two standard deviations better than
+            students in a classroom. Tutoring works and does not scale.
+            Generative AI is the first technology that attacks the cost of the
+            tutor itself. So I am making a bet on a consumer AI education app
+            for self-directed learners, thirteen and up. It runs as an
+            experiment, twelve months from August 2026.
+          </p>
+          <p>My current focus is art education with LLMs.</p>
+        </div>
       </div>
     </section>
 
