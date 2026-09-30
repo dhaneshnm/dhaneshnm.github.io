@@ -5,13 +5,14 @@
 <!-- Source for public/og.png (1200x630). Regenerate with scripts/og-shot.mjs. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Atkinson+Hyperlegible:wght@400&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Newsreader:opsz,wght@6..72,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
     --paper: #FBFBF8;
     --ink: #1C1E1D;
     --ink-soft: #5C615E;
-    --line: #E2E3DC;
+    --line-strong: #C9CBC2;
+    --accent: #B4530A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--paper); }
@@ -20,53 +21,64 @@
     height: 630px;
     background: var(--paper);
     color: var(--ink);
-    padding: 96px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 88px 96px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 72px;
     -webkit-font-smoothing: antialiased;
+    position: relative;
   }
+  .text { display: flex; flex-direction: column; gap: 26px; }
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 21px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-soft);
+    display: flex; align-items: center; gap: 14px;
   }
-  .middle { display: flex; flex-direction: column; gap: 22px; }
-  .rule { width: 96px; height: 2px; background: var(--line); }
+  .eyebrow .dot { color: var(--accent); font-size: 16px; }
   .name {
     font-family: 'Archivo', sans-serif;
-    font-weight: 800;
-    font-size: 92px;
+    font-weight: 900;
+    font-size: 78px;
     line-height: 1.0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     color: var(--ink);
   }
   .tag {
-    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
-    font-weight: 400;
-    font-size: 34px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 30px;
+    line-height: 1.35;
     color: var(--ink-soft);
+    max-width: 22em;
+  }
+  .portrait {
+    width: 280px; height: 280px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 1px var(--line-strong), 0 0 0 10px var(--paper), 0 0 0 12px var(--accent);
   }
   .foot {
+    position: absolute; left: 96px; bottom: 56px;
     font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500;
-    font-size: 22px;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    font-size: 21px;
+    letter-spacing: 0.06em;
     color: var(--ink-soft);
+    display: flex; align-items: center; gap: 12px;
   }
+  .foot::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
 </style>
 </head>
 <body>
   <div class="card">
-    <div class="eyebrow">Solo founder · Learning &amp; education</div>
-    <div class="middle">
-      <div class="rule"></div>
-      <div class="name">Dhanesh Neela Mana</div>
-      <div class="tag">Building for how people learn.</div>
+    <div class="text">
+      <div class="eyebrow"><span>Solo founder</span><span class="dot">●</span><span>Learning &amp; education</span></div>
+      <div class="name">Building for how<br>people learn.</div>
+      <div class="tag">Tools that help people build real skills and make them stick.</div>
     </div>
+    <img class="portrait" src="../public/dhanesh.jpg" alt="" />
     <div class="foot">dneelamana.com</div>
   </div>
 </body>

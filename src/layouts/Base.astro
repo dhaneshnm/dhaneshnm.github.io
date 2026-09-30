@@ -16,6 +16,9 @@ const canonical = "https://dneelamana.com/";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfbf8" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141514" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content="website" />
@@ -29,20 +32,38 @@ const canonical = "https://dneelamana.com/";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style is:global>
+      /* Single column, 960px, mono label rail left of each section. One accent, used sparingly. */
       :root {
         --paper: #fbfbf8;
         --ink: #1c1e1d;
         --ink-soft: #5c615e;
         --line: #e2e3dc;
         --line-strong: #c9cbc2;
-        --ship: #177245;
-        --build: #9a5b00;
-        --kill: #b3261e;
-        --maxw: 860px;
+        --accent: #b4530a;
+        --accent-ink: #ffffff;
+        --accent-wash: #f6ebe0;
+        --maxw: 960px;
+        --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+        --body: "Newsreader", Georgia, "Times New Roman", serif;
+        --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #141514;
+          --ink: #ebeae4;
+          --ink-soft: #9a9e98;
+          --line: #2a2c29;
+          --line-strong: #3a3d39;
+          --accent: #e08a4a;
+          --accent-ink: #141514;
+          --accent-wash: #2a1f14;
+          color-scheme: dark;
+        }
       }
 
       * {
@@ -58,35 +79,40 @@ const canonical = "https://dneelamana.com/";
       body {
         background: var(--paper);
         color: var(--ink);
-        font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
-        font-size: 17px;
-        line-height: 1.65;
+        font-family: var(--body);
+        font-size: 18px;
+        line-height: 1.6;
         -webkit-font-smoothing: antialiased;
       }
 
       .wrap {
         max-width: var(--maxw);
         margin: 0 auto;
-        padding: 0 24px;
+        padding: 0 20px;
       }
 
       a {
-        color: var(--ink);
+        color: inherit;
         text-decoration: underline;
+        text-decoration-color: var(--accent);
         text-decoration-thickness: 1px;
-        text-underline-offset: 3px;
+        text-underline-offset: 4px;
       }
       a:hover {
-        text-decoration-thickness: 2.5px;
+        color: var(--accent);
+        text-decoration-thickness: 2px;
       }
       a:focus-visible {
-        outline: 2px solid var(--ink);
+        outline: 2px solid var(--accent);
         outline-offset: 3px;
-        border-radius: 1px;
+        border-radius: 2px;
+      }
+      ::selection {
+        background: var(--accent-wash);
       }
 
       .mono {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: var(--mono);
       }
 
       /* ---------- Header ---------- */
@@ -97,166 +123,274 @@ const canonical = "https://dneelamana.com/";
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        padding: 20px 0;
+        padding: 18px 20px;
         gap: 16px;
         flex-wrap: wrap;
       }
       .wordmark {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: var(--mono);
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .wordmark::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
       }
       nav ul {
         display: flex;
-        gap: 20px;
+        gap: 22px;
         list-style: none;
       }
       nav a {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: var(--mono);
         font-size: 0.8rem;
         letter-spacing: 0.04em;
         text-decoration: none;
         color: var(--ink-soft);
       }
       nav a:hover {
-        color: var(--ink);
-        text-decoration: underline;
+        color: var(--accent);
       }
 
       /* ---------- Hero ---------- */
       .hero {
-        padding: 88px 0 56px;
+        padding: 80px 0 64px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 56px;
+      }
+      .hero-text {
+        min-width: 0;
       }
       .eyebrow {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.78rem;
+        font-family: var(--mono);
+        font-size: 0.76rem;
         font-weight: 500;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--ink-soft);
-        margin-bottom: 20px;
+        margin-bottom: 22px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .eyebrow .dot {
+        color: var(--accent);
       }
       h1 {
-        font-family: "Archivo", sans-serif;
+        font-family: var(--display);
         font-weight: 900;
-        font-size: clamp(2.6rem, 7vw, 4.4rem);
-        line-height: 1.02;
-        letter-spacing: -0.02em;
-        margin-bottom: 28px;
+        font-size: clamp(2.35rem, 6.5vw, 4.2rem);
+        line-height: 1;
+        letter-spacing: -0.025em;
+        margin-bottom: 26px;
       }
       .hero p {
-        max-width: 620px;
-        font-size: 1.1rem;
-        color: var(--ink);
+        max-width: 34em;
+        font-size: 1.2rem;
+        line-height: 1.5;
+      }
+      .hero p em {
+        font-style: italic;
+      }
+      .cta {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 32px;
+      }
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        background: var(--accent);
+        color: var(--accent-ink);
+        padding: 12px 20px;
+        border-radius: 3px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn:hover {
+        color: var(--accent-ink);
+        filter: brightness(0.94);
+      }
+      .btn svg {
+        width: 14px;
+        height: 14px;
+      }
+      .cta .ghost {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+      }
+      .portrait {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 0 0 1px var(--line-strong),
+          0 0 0 7px var(--paper),
+          0 0 0 8px var(--accent);
+        justify-self: end;
       }
 
-      /* ---------- Rules ---------- */
-      .rules {
+      /* ---------- Rail sections ---------- */
+      .rail {
         border-top: 1px solid var(--line);
-        padding: 40px 0;
+        padding: 48px 0;
       }
-      .rules-grid {
+      .rail-grid {
         display: grid;
-        grid-template-columns: 180px 1fr;
+        grid-template-columns: 200px 1fr;
         gap: 24px;
       }
-      .section-label {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.78rem;
+      .label {
+        font-family: var(--mono);
+        font-size: 0.76rem;
         font-weight: 600;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--ink-soft);
-        padding-top: 4px;
+        padding-top: 6px;
       }
-      .rules p {
-        max-width: 620px;
+      .label small {
+        display: block;
+        margin-top: 8px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        color: var(--accent);
       }
-      .rules p + p {
+      .rail p {
+        max-width: 34em;
+      }
+      .rail p + p {
         margin-top: 14px;
       }
 
-      /* ---------- About ---------- */
-      .about {
-        border-top: 1px solid var(--line);
-        padding: 40px 0;
-      }
-      .about-grid {
+      /* ---------- Now ---------- */
+      .now-list {
+        list-style: none;
         display: grid;
-        grid-template-columns: 180px 1fr;
-        gap: 24px;
+        gap: 14px;
+        max-width: 36em;
       }
-      .about p {
-        max-width: 620px;
+      .now-list li {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 12px;
+        align-items: baseline;
       }
-      .about p + p {
-        margin-top: 14px;
+      .now-list li::before {
+        content: "→";
+        font-family: var(--mono);
+        color: var(--accent);
+      }
+
+      /* ---------- Timeline ---------- */
+      .timeline {
+        list-style: none;
+        display: grid;
+        margin-top: 20px;
+      }
+      .timeline li {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 20px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+        align-items: baseline;
+      }
+      .timeline li:first-child {
+        border-top: 1px solid var(--line);
+      }
+      .timeline .org {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .timeline .role span {
+        color: var(--ink-soft);
+      }
+      .timeline li.current .org {
+        color: var(--accent);
+      }
+      .outro {
+        margin-top: 24px;
+        font-style: italic;
+        color: var(--ink-soft);
       }
 
       /* ---------- Follow ---------- */
-      .follow {
-        border-top: 1px solid var(--line);
-        padding: 40px 0 64px;
-      }
-      .follow-grid {
-        display: grid;
-        grid-template-columns: 180px 1fr;
-        gap: 24px;
-      }
-      .follow p {
-        max-width: 620px;
-        margin-bottom: 20px;
-      }
-      .link-list {
+      .links {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px 28px;
+        gap: 10px;
         list-style: none;
+        margin-top: 20px;
       }
-      .link-list a {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.85rem;
+      .links a {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        text-decoration: none;
+        border: 1px solid var(--line-strong);
+        padding: 8px 14px;
+        border-radius: 999px;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .links a:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .links a b {
+        color: var(--accent);
+        font-weight: 500;
       }
 
       /* ---------- Footer ---------- */
       footer {
         border-top: 1px solid var(--line);
-        padding: 24px 0 48px;
+        padding: 24px 0 56px;
       }
       .footer-inner {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 8px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.75rem;
+        font-family: var(--mono);
+        font-size: 0.74rem;
         color: var(--ink-soft);
       }
 
       /* ---------- Motion ---------- */
       @media (prefers-reduced-motion: no-preference) {
-        .hero,
-        .rules,
-        .about,
-        .follow {
-          animation: rise 0.5s ease both;
-        }
-        .rules {
-          animation-delay: 0.06s;
-        }
-        .about {
-          animation-delay: 0.12s;
-        }
-        .follow {
-          animation-delay: 0.18s;
+        .hero {
+          animation: rise 0.45s ease both;
         }
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(8px);
           }
           to {
             opacity: 1;
@@ -266,15 +400,42 @@ const canonical = "https://dneelamana.com/";
       }
 
       /* ---------- Mobile ---------- */
-      @media (max-width: 640px) {
-        .rules-grid,
-        .about-grid,
-        .follow-grid {
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
+      @media (max-width: 700px) {
         .hero {
-          padding: 56px 0 40px;
+          padding: 44px 0;
+        }
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .portrait {
+          width: 104px;
+          height: 104px;
+          justify-self: start;
+          order: -1;
+        }
+        .eyebrow {
+          display: block;
+          font-size: 0.7rem;
+          letter-spacing: 0.08em;
+          line-height: 1.8;
+        }
+        .eyebrow .dot {
+          margin: 0 8px;
+        }
+        .hero p {
+          font-size: 1.1rem;
+        }
+        .rail-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .timeline li {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+        nav ul {
+          gap: 16px;
         }
       }
     </style>

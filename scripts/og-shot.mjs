@@ -2,10 +2,11 @@
 // One-off, dev-only — never runs during `astro build`.
 //
 // Usage:
-//   npm i -D playwright && npx playwright install chromium
+//   npm i -D playwright   (uses your installed Google Chrome)
 //   node scripts/og-shot.mjs
 //
 import { chromium } from "playwright";
+// Uses installed Google Chrome; no browser download needed.
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -13,7 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const htmlPath = resolve(__dirname, "og.html");
 const outPath = resolve(__dirname, "../public/og.png");
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ channel: "chrome" });
 const page = await browser.newPage({
   viewport: { width: 1200, height: 630 },
   deviceScaleFactor: 1,

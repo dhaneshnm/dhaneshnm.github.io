@@ -1,21 +1,38 @@
 ---
 import Base from "../layouts/Base.astro";
+
+// "Now" section. Update the date and lines together, roughly monthly.
+// TODO: replace placeholder lines with real ones before deploying.
+const nowUpdated = "Sep 2026";
+const now = [
+  "Prototyping a spaced-practice app for skills, not facts. First testers this month.",
+  "Writing weekly on Substack about what actually makes learning stick.",
+  "Talking to teachers and self-learners. If that is you, reply on X.",
+];
+
+const timeline = [
+  { org: "TCS", role: ".NET banking systems", note: "2008" },
+  { org: "Front Rush", role: "Recruiting products used by 100,000 athletes" },
+  { org: "Amazon", role: "Front-end engineering" },
+  { org: "EPFL", role: "Semantic search for brain research" },
+  { org: "Tamedia", role: "Legacy-platform rescue, Switzerland", note: "still proud of this one" },
+  {
+    org: "AI startup",
+    role: "CTO & co-founder. Built a voice-first roleplay training product end to end.",
+    current: true,
+  },
+];
 ---
 
 <Base>
   <header>
     <div class="wrap header-inner">
       <a class="wordmark" href="/">Dhanesh Neela Mana</a>
-      <nav aria-label="Social links">
+      <nav aria-label="Site">
         <ul>
-          <li><a href="https://twitter.com/dneelamana">X</a></li>
-          <li>
-            <a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/"
-              >LinkedIn</a
-            >
-          </li>
-          <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
-          <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+          <li><a href="#now">Now</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://dhaneshneelamana.substack.com/">Writing</a></li>
         </ul>
       </nav>
     </div>
@@ -23,47 +40,69 @@ import Base from "../layouts/Base.astro";
 
   <main>
     <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow">Solo founder · Learning &amp; education</p>
-        <h1>Building for how<br />people learn.</h1>
-        <p>
-          After 18 years building software for other people — banks, sports
-          tech, Amazon, brain research at EPFL, Swiss media, and an AI startup as
-          CTO and co-founder — I'm building my own. The focus is learning: tools
-          that help people build real skills and make them stick.
-        </p>
-      </div>
-    </section>
-
-    <section class="rules">
-      <div class="wrap rules-grid">
-        <div class="section-label">The focus</div>
-        <div>
-          <p>
-            I build learning software — the tools people use to study, practice,
-            and get genuinely good at things. My bar is behavior change, not
-            completion: learning that shows up in real life, not content that
-            just gets marked done.
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow">
+            <span>Solo founder</span><span class="dot" aria-hidden="true">●</span><span
+              >Learning &amp; education</span
+            >
           </p>
+          <h1>Building for how<br />people learn.</h1>
+          <p>
+            After 18 years building software for other people, I'm building my
+            own. Tools that help people build real skills and make them stick.{" "}
+            <em>My bar is behavior change, not completion.</em>
+          </p>
+          <div class="cta">
+            <a class="btn" href="https://dhaneshneelamana.substack.com/">
+              Read on Substack
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4"></path>
+              </svg>
+            </a>
+            <a class="ghost" href="https://twitter.com/dneelamana">Follow @dneelamana</a>
+          </div>
         </div>
+        <img
+          class="portrait"
+          src="/dhanesh.jpg"
+          alt="Dhanesh Neela Mana"
+          width="400"
+          height="400"
+          fetchpriority="high"
+        />
       </div>
     </section>
 
-    <section class="about" id="about">
-      <div class="wrap about-grid">
-        <div class="section-label">About</div>
+    <section class="rail" id="now">
+      <div class="wrap rail-grid">
+        <div class="label">Now<small>Updated {nowUpdated}</small></div>
+        <ul class="now-list">
+          {now.map((line) => <li>{line}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="rail" id="about">
+      <div class="wrap rail-grid">
+        <div class="label">About</div>
         <div>
-          <p>
-            I'm Dhanesh Neela Mana. I've built software since 2008: .NET banking
-            systems at TCS, recruiting products used by 100,000 athletes at Front
-            Rush, front-end at Amazon, semantic search for brain research at
-            EPFL, and a legacy-platform rescue at Tamedia in Switzerland that I'm
-            still proud of. Most recently I was CTO and co-founder of an AI
-            startup, where I built a voice-first roleplay training product end to
-            end.
-          </p>
-          <p>
-            Every side project I've ever loved was about learning — flashcards,
+          <p>I'm Dhanesh. I've built software since 2008, across six very different rooms:</p>
+          <ol class="timeline">
+            {
+              timeline.map((t) => (
+                <li class:list={{ current: t.current }}>
+                  <span class="org">{t.org}</span>
+                  <span class="role">
+                    {t.role}
+                    {t.note && <span> · {t.note}</span>}
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="outro">
+            Every side project I've ever loved was about learning: flashcards,
             e-book tools, teaching apps. Now it's the main project. I live in
             College Station, Texas.
           </p>
@@ -71,23 +110,18 @@ import Base from "../layouts/Base.astro";
       </div>
     </section>
 
-    <section class="follow">
-      <div class="wrap follow-grid">
-        <div class="section-label">Follow along</div>
+    <section class="rail" id="follow">
+      <div class="wrap rail-grid">
+        <div class="label">Follow along</div>
         <div>
-          <p>
-            I build in public. X for the day-to-day, Substack for the longer
-            write-ups.
-          </p>
-          <ul class="link-list">
-            <li><a href="https://twitter.com/dneelamana">X — @dneelamana</a></li>
-            <li><a href="https://dhaneshneelamana.substack.com/">Substack</a></li>
+          <p>I build in public. X for the day-to-day, Substack for the longer write-ups.</p>
+          <ul class="links">
+            <li><a href="https://twitter.com/dneelamana"><b>X</b> @dneelamana</a></li>
+            <li><a href="https://dhaneshneelamana.substack.com/"><b>Substack</b> Essays</a></li>
             <li>
-              <a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/"
-                >LinkedIn</a
-              >
+              <a href="https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/"><b>LinkedIn</b> Profile</a>
             </li>
-            <li><a href="https://github.com/dhaneshnm">GitHub</a></li>
+            <li><a href="https://github.com/dhaneshnm"><b>GitHub</b> Code</a></li>
           </ul>
         </div>
       </div>
