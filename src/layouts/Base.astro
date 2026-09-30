@@ -277,22 +277,18 @@ const canonical = "https://dneelamana.com/";
       }
 
       /* ---------- Now ---------- */
-      .now-list {
-        list-style: none;
+      .now-blocks {
         display: grid;
-        gap: 14px;
-        max-width: 36em;
+        gap: 28px;
       }
-      .now-list li {
-        display: grid;
-        grid-template-columns: 22px 1fr;
-        gap: 12px;
-        align-items: baseline;
-      }
-      .now-list li::before {
-        content: "→";
+      .sub {
         font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         color: var(--accent);
+        margin-bottom: 8px;
       }
 
       /* ---------- Timeline ---------- */
