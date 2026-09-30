@@ -318,6 +318,14 @@ const canonical = "https://dneelamana.com/";
         font-weight: 600;
         letter-spacing: 0.02em;
       }
+      .timeline .org small {
+        display: block;
+        margin-top: 3px;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: var(--ink-soft);
+      }
       .timeline .role span {
         color: var(--ink-soft);
       }
@@ -424,6 +432,10 @@ const canonical = "https://dneelamana.com/";
         .timeline li {
           grid-template-columns: 1fr;
           gap: 2px;
+        }
+        .timeline .org small {
+          display: inline;
+          margin-left: 10px;
         }
         nav ul {
           gap: 16px;

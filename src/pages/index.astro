@@ -16,21 +16,24 @@ const x = "https://x.com/dneelamana";
 const substack = "https://dhaneshneelamana.substack.com";
 const github = "https://github.com/dhaneshnm";
 
+// Reverse chronological. Newest first.
 const timeline = [
-  { org: "TCS", role: ".NET web apps for banks", note: "2008" },
-  { org: "Front Rush", role: "Sports recruiting software in .NET and Rails", note: "4 years" },
-  { org: "Amazon", role: "Front-end engineering in React" },
-  { org: "EPFL", role: "Front end for a knowledge graph at the Blue Brain Project" },
   {
-    org: "Tamedia",
-    role: "Rescued a failing codebase and a high-attrition team. Two years on, nobody had left and the team had doubled.",
-    note: "still proud of this one",
-  },
-  {
-    org: "AI startup",
+    org: "Master Ed",
+    years: "Dec 2025 to Jul 2026 · Next AI, Canada",
     role: "CTO and co-founder. Built a voice-first roleplay training product end to end and took an enterprise pilot live on the committed date.",
     current: true,
   },
+  {
+    org: "Tamedia",
+    years: "2022 to 2024",
+    role: "Rescued a failing codebase and a high-attrition team. Two years on, nobody had left and the team had doubled.",
+    note: "still proud of this one",
+  },
+  { org: "EPFL", years: "2019 to 2022", role: "Front end for a knowledge graph at the Blue Brain Project" },
+  { org: "Amazon", years: "2017 to 2019", role: "Front-end engineering in React" },
+  { org: "Front Rush", years: "2013 to 2017", role: "Sports recruiting software in .NET and Rails" },
+  { org: "TCS", years: "2008 to 2011", role: ".NET web apps for banks" },
 ];
 ---
 
@@ -103,7 +106,10 @@ const timeline = [
             {
               timeline.map((t) => (
                 <li class:list={{ current: t.current }}>
-                  <span class="org">{t.org}</span>
+                  <span class="org">
+                    {t.org}
+                    <small>{t.years}</small>
+                  </span>
                   <span class="role">
                     {t.role}
                     {t.note && <span> · {t.note}</span>}
