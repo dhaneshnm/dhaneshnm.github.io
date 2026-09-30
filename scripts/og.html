@@ -5,14 +5,14 @@
 <!-- Source for public/og.png (1200x630). Regenerate with scripts/og-shot.mjs. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Newsreader:opsz,wght@6..72,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,900&family=Source+Sans+3:wght@400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --paper: #FBFBF8;
-    --ink: #1C1E1D;
-    --ink-soft: #5C615E;
-    --line-strong: #C9CBC2;
-    --accent: #B4530A;
+    --paper: #14231C;
+    --ink: #F1EDE3;
+    --ink-soft: #A3ADA4;
+    --line-strong: #34503F;
+    --accent: #E8C15A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--paper); }
@@ -31,7 +31,7 @@
   }
   .text { display: flex; flex-direction: column; gap: 26px; }
   .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
     font-size: 21px;
     letter-spacing: 0.12em;
@@ -41,16 +41,17 @@
   }
   .eyebrow .dot { color: var(--accent); font-size: 16px; }
   .name {
-    font-family: 'Archivo', sans-serif;
+    font-family: 'Fraunces', serif;
     font-weight: 900;
-    font-size: 78px;
-    line-height: 1.0;
-    letter-spacing: -0.025em;
+    font-size: 84px;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
     color: var(--ink);
   }
+  .name em { font-style: italic; color: var(--accent); }
   .tag {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: 30px;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-size: 31px;
     line-height: 1.35;
     color: var(--ink-soft);
     max-width: 22em;
@@ -61,7 +62,7 @@
   }
   .foot {
     position: absolute; left: 96px; bottom: 56px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
     font-size: 21px;
     letter-spacing: 0.06em;
@@ -75,7 +76,7 @@
   <div class="card">
     <div class="text">
       <div class="eyebrow"><span>Solo founder</span><span class="dot">●</span><span>Learning &amp; education</span></div>
-      <div class="name">Building for how<br>people learn.</div>
+      <div class="name">Building for how<br>people <em>learn.</em></div>
       <div class="tag">Tools that help people build real skills and make them stick.</div>
     </div>
     <img class="portrait" src="../public/dhanesh.jpg" alt="" />

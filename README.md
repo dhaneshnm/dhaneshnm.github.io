@@ -40,6 +40,6 @@ Commit the new `public/og.png`.
 
 ## Design
 
-Paper and ink palette with one burnt-amber accent. Archivo for the headline, Newsreader for body text, IBM Plex Mono for labels. Dark mode follows the OS setting. Tokens are at the top of `src/layouts/Base.astro`.
+"Chalkboard": dark slate-green with one chalk-yellow accent. Fraunces for the headline, Source Sans 3 for body text, JetBrains Mono for labels. Single dark look; no light variant. Tokens are at the top of `src/layouts/Base.astro`.
 
 `_archive/` holds old blog posts (now redirected to Substack). `_reference/` is the previous site. Neither is built.

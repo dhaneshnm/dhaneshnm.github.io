@@ -16,9 +16,8 @@ const canonical = "https://dneelamana.com/";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfbf8" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141514" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#14231c" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content="website" />
@@ -32,38 +31,26 @@ const canonical = "https://dneelamana.com/";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,900&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style is:global>
-      /* Single column, 960px, mono label rail left of each section. One accent, used sparingly. */
+      /* Chalkboard: dark slate-green, chalk-yellow accent. Single committed dark look.
+         Single column, 960px, mono label rail left of each section. */
       :root {
-        --paper: #fbfbf8;
-        --ink: #1c1e1d;
-        --ink-soft: #5c615e;
-        --line: #e2e3dc;
-        --line-strong: #c9cbc2;
-        --accent: #b4530a;
-        --accent-ink: #ffffff;
-        --accent-wash: #f6ebe0;
+        --paper: #14231c;
+        --ink: #f1ede3;
+        --ink-soft: #a3ada4;
+        --line: #25392e;
+        --line-strong: #34503f;
+        --accent: #e8c15a;
+        --accent-ink: #14231c;
+        --accent-wash: #2b3a2a;
         --maxw: 960px;
-        --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-        --body: "Newsreader", Georgia, "Times New Roman", serif;
-        --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-        color-scheme: light;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --paper: #141514;
-          --ink: #ebeae4;
-          --ink-soft: #9a9e98;
-          --line: #2a2c29;
-          --line-strong: #3a3d39;
-          --accent: #e08a4a;
-          --accent-ink: #141514;
-          --accent-wash: #2a1f14;
-          color-scheme: dark;
-        }
+        --display: "Fraunces", Georgia, "Times New Roman", serif;
+        --body: "Source Sans 3", system-ui, -apple-system, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        color-scheme: dark;
       }
 
       * {
@@ -80,7 +67,7 @@ const canonical = "https://dneelamana.com/";
         background: var(--paper);
         color: var(--ink);
         font-family: var(--body);
-        font-size: 18px;
+        font-size: 18.5px;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
       }
@@ -193,10 +180,14 @@ const canonical = "https://dneelamana.com/";
       h1 {
         font-family: var(--display);
         font-weight: 900;
-        font-size: clamp(2.35rem, 6.5vw, 4.2rem);
-        line-height: 1;
-        letter-spacing: -0.025em;
+        font-size: clamp(2.5rem, 7vw, 4.6rem);
+        line-height: 0.98;
+        letter-spacing: -0.02em;
         margin-bottom: 26px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
       }
       .hero p {
         max-width: 34em;
@@ -222,7 +213,7 @@ const canonical = "https://dneelamana.com/";
         background: var(--accent);
         color: var(--accent-ink);
         padding: 12px 20px;
-        border-radius: 3px;
+        border-radius: 4px;
         display: inline-flex;
         align-items: center;
         gap: 8px;
