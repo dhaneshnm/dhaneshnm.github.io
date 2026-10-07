@@ -1,7 +1,7 @@
 ---
-const title = "Dhanesh Neela Mana · Solo founder building learning apps";
+const title = "Dhanesh Neela Mana · Building an AI tutor";
 const description =
-  "Software engineer since 2008. Now building learning apps one at a time, each judged against a written bet. College Station, Texas.";
+  "Eighteen years shipping software, most recently as CTO of an ed-tech startup. Now building apps that help people learn. College Station, Texas.";
 const ogDescription = description;
 const canonical = "https://dneelamana.com/";
 ---
@@ -15,8 +15,8 @@ const canonical = "https://dneelamana.com/";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#14231c" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fcfcfa" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content="website" />
@@ -31,26 +31,22 @@ const canonical = "https://dneelamana.com/";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,900&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Shantell+Sans:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <style is:global>
-      /* Chalkboard: dark slate-green, chalk-yellow accent. Single committed dark look.
-         Single column, 960px, mono label rail left of each section. */
+      /* Red Pen: a printed textbook page marked up by a teacher. Single light look.
+         Three columns: section heading, text, margin. The margin holds red notes, never labels. */
       :root {
-        --paper: #14231c;
-        --ink: #f1ede3;
-        --ink-soft: #a3ada4;
-        --line: #25392e;
-        --line-strong: #34503f;
-        --accent: #e8c15a;
-        --accent-ink: #14231c;
-        --accent-wash: #2b3a2a;
-        --maxw: 960px;
-        --display: "Fraunces", Georgia, "Times New Roman", serif;
-        --body: "Source Sans 3", system-ui, -apple-system, sans-serif;
-        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-        color-scheme: dark;
+        --paper: #fcfcfa;
+        --ink: #1d1c1a;
+        --pencil: #6b675f;
+        --red: #c0392b;
+        --rule: #e3e1db;
+        --maxw: 1000px;
+        --print: "Spectral", Georgia, "Times New Roman", serif;
+        --hand: "Shantell Sans", "Comic Sans MS", cursive;
+        color-scheme: light;
       }
 
       * {
@@ -66,8 +62,8 @@ const canonical = "https://dneelamana.com/";
       body {
         background: var(--paper);
         color: var(--ink);
-        font-family: var(--body);
-        font-size: 18.5px;
+        font-family: var(--print);
+        font-size: 19px;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
       }
@@ -81,360 +77,195 @@ const canonical = "https://dneelamana.com/";
       a {
         color: inherit;
         text-decoration: underline;
-        text-decoration-color: var(--accent);
+        text-decoration-color: var(--red);
         text-decoration-thickness: 1px;
         text-underline-offset: 4px;
       }
       a:hover {
-        color: var(--accent);
-        text-decoration-thickness: 2px;
+        color: var(--red);
       }
       a:focus-visible {
-        outline: 2px solid var(--accent);
+        outline: 2px solid var(--red);
         outline-offset: 3px;
         border-radius: 2px;
       }
       ::selection {
-        background: var(--accent-wash);
-      }
-
-      .mono {
-        font-family: var(--mono);
+        background: #f3d6d2;
       }
 
       /* ---------- Header ---------- */
       header {
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--rule);
       }
       .header-inner {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        padding: 18px 20px;
-        gap: 16px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+        gap: 12px;
         flex-wrap: wrap;
       }
-      .wordmark {
-        font-family: var(--mono);
-        font-weight: 600;
-        font-size: 0.82rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+      .name {
+        font-weight: 700;
+        font-size: 1.05rem;
         text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .wordmark::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--accent);
       }
       nav ul {
         display: flex;
-        gap: 22px;
+        gap: 24px;
         list-style: none;
+        font-size: 0.95rem;
       }
       nav a {
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        letter-spacing: 0.04em;
         text-decoration: none;
-        color: var(--ink-soft);
       }
-      nav a:hover {
-        color: var(--accent);
+
+      /* ---------- Grid ---------- */
+      .grid {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr) 220px;
+        gap: 32px;
       }
 
       /* ---------- Hero ---------- */
       .hero {
-        padding: 80px 0 64px;
-      }
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: 56px;
+        padding-top: 64px;
+        padding-bottom: 56px;
       }
       .hero-text {
+        grid-column: 1 / 3;
         min-width: 0;
       }
-      .eyebrow {
-        font-family: var(--mono);
-        font-size: 0.76rem;
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-        margin-bottom: 22px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .eyebrow .dot {
-        color: var(--accent);
-      }
       h1 {
-        font-family: var(--display);
-        font-weight: 900;
-        font-size: clamp(2.5rem, 7vw, 4.6rem);
-        line-height: 0.98;
-        letter-spacing: -0.02em;
-        margin-bottom: 26px;
-      }
-      h1 em {
-        font-style: italic;
-        color: var(--accent);
-      }
-      .hero p {
-        max-width: 34em;
-        font-size: 1.2rem;
-        line-height: 1.5;
-      }
-      .hero p em {
-        font-style: italic;
-      }
-      .cta {
-        display: flex;
-        gap: 22px;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-top: 32px;
-      }
-      .btn {
-        font-family: var(--mono);
-        font-size: 0.82rem;
         font-weight: 600;
-        letter-spacing: 0.04em;
-        text-decoration: none;
-        background: var(--accent);
-        color: var(--accent-ink);
-        padding: 12px 20px;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
+        font-size: clamp(2.2rem, 5.4vw, 3.7rem);
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+        margin-bottom: 28px;
+        text-wrap: balance;
       }
-      .btn:hover {
-        color: var(--accent-ink);
-        filter: brightness(0.94);
+      .mark {
+        position: relative;
+        white-space: nowrap;
       }
-      .btn svg {
-        width: 14px;
-        height: 14px;
+      .mark svg {
+        position: absolute;
+        left: -6%;
+        bottom: -0.2em;
+        width: 112%;
+        height: 0.34em;
+        overflow: visible;
       }
-      .cta .ghost {
-        font-family: var(--mono);
-        font-size: 0.82rem;
-      }
-      .portrait {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow:
-          0 0 0 1px var(--line-strong),
-          0 0 0 7px var(--paper),
-          0 0 0 8px var(--accent);
-        justify-self: end;
-      }
-
-      /* ---------- Rail sections ---------- */
-      .rail {
-        border-top: 1px solid var(--line);
-        padding: 48px 0;
-      }
-      .rail-grid {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        gap: 24px;
-      }
-      .label {
-        font-family: var(--mono);
-        font-size: 0.76rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-        padding-top: 6px;
-      }
-      .label small {
-        display: block;
-        margin-top: 8px;
-        font-weight: 400;
-        letter-spacing: 0.04em;
-        text-transform: none;
-        color: var(--accent);
-      }
-      .rail p {
+      .hero-text p,
+      .row p {
         max-width: 34em;
       }
-      .rail p + p {
+      .hero-text p + p,
+      .row p + p {
         margin-top: 14px;
       }
 
-      /* ---------- Now ---------- */
-      .now-blocks {
-        display: grid;
-        gap: 28px;
-      }
-      .sub {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 8px;
-      }
-
-      /* ---------- Timeline ---------- */
-      .timeline {
-        list-style: none;
-        display: grid;
-        margin-top: 20px;
-      }
-      .timeline li {
-        display: grid;
-        grid-template-columns: 150px 1fr;
-        gap: 20px;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--line);
-        align-items: baseline;
-      }
-      .timeline li:first-child {
-        border-top: 1px solid var(--line);
-      }
-      .timeline .org {
-        font-family: var(--mono);
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-      }
-      .timeline .org small {
-        display: block;
-        margin-top: 3px;
-        font-size: 0.72rem;
-        font-weight: 400;
-        letter-spacing: 0;
-        color: var(--ink-soft);
-      }
-      .timeline .role span {
-        color: var(--ink-soft);
-      }
-      .timeline li.current .org {
-        color: var(--accent);
-      }
-      .outro {
-        margin-top: 24px;
-        font-style: italic;
-        color: var(--ink-soft);
-      }
-
-      /* ---------- Follow ---------- */
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        list-style: none;
-        margin-top: 20px;
-      }
-      .links a {
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        text-decoration: none;
-        border: 1px solid var(--line-strong);
-        padding: 8px 14px;
-        border-radius: 999px;
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-      }
-      .links a:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-      .links a b {
-        color: var(--accent);
+      /* ---------- Margin notes ---------- */
+      .margin {
+        font-family: var(--hand);
         font-weight: 500;
+        color: var(--red);
+        font-size: 0.88rem;
+        line-height: 1.4;
+        display: grid;
+        gap: 18px;
+        align-content: start;
+      }
+      .margin img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(1) contrast(1.05);
+        border-radius: 50%;
+      }
+      .cap {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .cap svg {
+        flex: none;
+      }
+
+      /* ---------- Sections ---------- */
+      .row {
+        border-top: 1px solid var(--rule);
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+      h2 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-variant: small-caps;
+        letter-spacing: 0.05em;
+      }
+
+      /* ---------- Work ---------- */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.98rem;
+      }
+      td {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--rule);
+        vertical-align: baseline;
+      }
+      td:first-child {
+        width: 96px;
+        color: var(--pencil);
+        font-variant-numeric: oldstyle-nums;
+        white-space: nowrap;
+      }
+      td b {
+        font-weight: 600;
       }
 
       /* ---------- Footer ---------- */
       footer {
-        border-top: 1px solid var(--line);
-        padding: 24px 0 56px;
+        border-top: 1px solid var(--rule);
       }
       .footer-inner {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 8px;
-        font-family: var(--mono);
-        font-size: 0.74rem;
-        color: var(--ink-soft);
-      }
-
-      /* ---------- Motion ---------- */
-      @media (prefers-reduced-motion: no-preference) {
-        .hero {
-          animation: rise 0.45s ease both;
-        }
-        @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: none;
-          }
-        }
+        padding-top: 22px;
+        padding-bottom: 56px;
+        color: var(--pencil);
+        font-size: 0.9rem;
       }
 
       /* ---------- Mobile ---------- */
-      @media (max-width: 700px) {
+      @media (max-width: 800px) {
+        body {
+          font-size: 18px;
+        }
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 18px;
+        }
+        .hero-text {
+          grid-column: auto;
+        }
         .hero {
-          padding: 44px 0;
+          padding-top: 40px;
+          padding-bottom: 40px;
         }
-        .hero-grid {
-          grid-template-columns: 1fr;
-          gap: 28px;
+        .hero .margin {
+          grid-template-columns: 110px minmax(0, 1fr);
+          align-items: start;
         }
-        .portrait {
-          width: 104px;
-          height: 104px;
-          justify-self: start;
-          order: -1;
-        }
-        .eyebrow {
-          display: block;
-          font-size: 0.7rem;
-          letter-spacing: 0.08em;
-          line-height: 1.8;
-        }
-        .eyebrow .dot {
-          margin: 0 8px;
-        }
-        .hero p {
-          font-size: 1.1rem;
-        }
-        .rail-grid {
-          grid-template-columns: 1fr;
-          gap: 14px;
-        }
-        .timeline li {
-          grid-template-columns: 1fr;
-          gap: 2px;
-        }
-        .timeline .org small {
-          display: inline;
-          margin-left: 10px;
-        }
-        nav ul {
-          gap: 16px;
+        td:first-child {
+          width: 76px;
         }
       }
     </style>

@@ -5,14 +5,14 @@
 <!-- Source for public/og.png (1200x630). Regenerate with scripts/og-shot.mjs. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,900&family=Source+Sans+3:wght@400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Shantell+Sans:wght@500;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --paper: #14231C;
-    --ink: #F1EDE3;
-    --ink-soft: #A3ADA4;
-    --line-strong: #34503F;
-    --accent: #E8C15A;
+    --paper: #FCFCFA;
+    --ink: #1D1C1A;
+    --pencil: #6B675F;
+    --red: #C0392B;
+    --rule: #E3E1DB;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--paper); }
@@ -21,65 +21,70 @@
     height: 630px;
     background: var(--paper);
     color: var(--ink);
-    padding: 88px 96px;
+    padding: 64px 88px 56px;
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 72px;
+    grid-template-columns: 1fr 240px;
+    grid-template-rows: auto 1fr auto;
+    column-gap: 64px;
     -webkit-font-smoothing: antialiased;
-    position: relative;
   }
-  .text { display: flex; flex-direction: column; gap: 26px; }
-  .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    font-size: 21px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    display: flex; align-items: center; gap: 14px;
+  .top {
+    grid-column: 1 / -1;
+    font-family: 'Spectral', serif;
+    font-weight: 700;
+    font-size: 26px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
   }
-  .eyebrow .dot { color: var(--accent); font-size: 16px; }
-  .name {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-size: 84px;
-    line-height: 0.98;
-    letter-spacing: -0.02em;
-    color: var(--ink);
+  .text { align-self: center; display: flex; flex-direction: column; gap: 40px; }
+  h1 {
+    font-family: 'Spectral', serif;
+    font-weight: 600;
+    font-size: 62px;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
   }
-  .name em { font-style: italic; color: var(--accent); }
+  .mark { position: relative; white-space: nowrap; }
+  .mark svg { position: absolute; left: -6%; bottom: -0.2em; width: 112%; height: 0.34em; overflow: visible; }
   .tag {
-    font-family: 'Source Sans 3', system-ui, sans-serif;
-    font-size: 31px;
-    line-height: 1.35;
-    color: var(--ink-soft);
-    max-width: 22em;
+    font-family: 'Spectral', serif;
+    font-size: 30px;
+    line-height: 1.4;
+    color: var(--pencil);
   }
-  .portrait {
-    width: 280px; height: 280px; border-radius: 50%; object-fit: cover;
-    box-shadow: 0 0 0 1px var(--line-strong), 0 0 0 10px var(--paper), 0 0 0 12px var(--accent);
+  .side { align-self: center; display: flex; flex-direction: column; gap: 18px; }
+  .portrait { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+  .note {
+    font-family: 'Shantell Sans', cursive;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--red);
+    display: flex; gap: 10px; align-items: flex-start;
   }
   .foot {
-    position: absolute; left: 96px; bottom: 56px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: 21px;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    display: flex; align-items: center; gap: 12px;
+    grid-column: 1 / -1;
+    font-family: 'Spectral', serif;
+    font-size: 24px;
+    color: var(--pencil);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
   }
-  .foot::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
 </style>
 </head>
 <body>
   <div class="card">
+    <div class="top">Dhanesh Neela Mana</div>
     <div class="text">
-      <div class="eyebrow"><span>Solo founder</span><span class="dot">●</span><span>Learning &amp; education</span></div>
-      <div class="name">Building for how<br>people <em>learn.</em></div>
-      <div class="tag">Tools that help people build real skills and make them stick.</div>
+      <h1>I'm building<br>an AI <span class="mark">tutor<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 12 C 40 4, 80 18, 120 9 S 180 6, 198 11" fill="none" stroke="#C0392B" stroke-width="4" stroke-linecap="round"/><path d="M14 17 C 60 12, 120 19, 186 14" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round"/></svg></span>.</h1>
+      <div class="tag">Eighteen years of software. Now apps for learning.</div>
     </div>
-    <img class="portrait" src="../public/dhanesh.jpg" alt="" />
+    <div class="side">
+      <img class="portrait" src="../public/dhanesh.jpg" alt="" />
+      <div class="note">
+        <svg width="30" height="34" viewBox="0 0 26 30" aria-hidden="true"><path d="M22 28 C 8 24, 4 14, 6 3 M2 8 L6 2 L11 7" fill="none" stroke="#C0392B" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>me</span>
+      </div>
+    </div>
     <div class="foot">dneelamana.com</div>
   </div>
 </body>
