@@ -46,6 +46,8 @@
   --term-bg: #f6f7f9;
   --loop: #b3261e;
   --loop-bg: #fcefee;
+  --warn: #8a5300;
+  --warn-bg: #fff3dc;
 
   --font-sans: 'Source Sans 3', 'Hiragino Sans', 'Noto Sans', 'Lato', Verdana, Helvetica, sans-serif;
   --font-mono: 'JetBrains Mono', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
@@ -57,7 +59,7 @@
     --accent: #4fbf8b; --accent-soft: #3d8a66; --accent-bg: #1e3529;
     --astra: #5fd19b; --claude: #ef9459; --claude-bg: #2d1f16; --ppo: #8f9b95;
     --rule: rgba(255, 255, 255, 0.12); --hair: #29312d; --hair-strong: #4b5550;
-    --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817;
+    --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817; --warn: #f0b35a; --warn-bg: #2b2213;
     color-scheme: dark;
   }
 }
@@ -67,7 +69,7 @@
   --accent: #4fbf8b; --accent-soft: #3d8a66; --accent-bg: #1e3529;
   --astra: #5fd19b; --claude: #ef9459; --claude-bg: #2d1f16; --ppo: #8f9b95;
   --rule: rgba(255, 255, 255, 0.12); --hair: #29312d; --hair-strong: #4b5550;
-  --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817;
+  --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817; --warn: #f0b35a; --warn-bg: #2b2213;
   color-scheme: dark;
 }
 
@@ -285,6 +287,10 @@ pre.edits .lhs { color: var(--claude); font-weight: 600; }
 .verdict.no { color: var(--loop); background: var(--loop-bg); }
 .verdict.yes { color: var(--astra); background: var(--accent-bg); }
 
+/* Notice: a statement the reader must not miss */
+.notice { margin: 0 0 1.2em; padding: 12px 16px; font-size: 16.5px; line-height: 1.5; color: var(--text); background: var(--warn-bg); border-radius: 6px; }
+.notice b { color: var(--warn); }
+
 /* Quote from a reasoning summary */
 blockquote.said { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--claude); color: var(--text); }
 blockquote.said p { margin: 0 0 4px; font-size: 19px; font-style: italic; font-weight: 300; }
@@ -360,7 +366,8 @@ img { max-width: 100%; }
       <p>We used the paper's prompts byte for byte and the paper's scoring protocol. We changed only the model that writes the weights. Each game got three replies.</p>
       <p>In each game, one of the three replies came close to Astra: <b>87%, 97% and 86%</b> of its score. The median replies reached 51%, 14% and 62%. Eight of the nine networks beat PPO trained for 100 million steps.</p>
       <p>In every game, at least one reply found Astra's strategy without access to Astra's replies. In Breakout and Asterix, the best networks lose to Astra mainly on <b>sticky actions</b>. A sticky action is a 10% chance that the game repeats the previous action.</p>
-      <p>We also replayed the paper's Qwen3.5-0.8B edit on one math problem. The base model repeated the same lines until the token limit. The edited model gave the correct answer. The editor calls cost about $11.75.</p>
+      <p>We also replayed the paper's Qwen3.5-0.8B edit on one math problem. Astra wrote that edit, so this part tests the paper and not Claude. The base model repeated the same lines until the token limit. The edited model gave the correct answer.</p>
+      <p>The editor calls cost about $11.75.</p>
     </div>
 
     <figure id="teaser">
@@ -533,9 +540,12 @@ img { max-width: 100%; }
     <p>The weaker attempts fail for other reasons. Breakout attempt 1 aims at the wrong catch cell. Seaquest attempts 1 and 2 misread their own position. Asterix attempt 1 collects too little treasure.</p>
     <p>Small patches close the gap for the best attempts. Analysis agents changed 26 to 94 parameters in each best network. These patches brought each best attempt to Astra's level or higher on seeds 0 to 199. The agents had Astra's network for comparison. Thus these patches do not show what Claude can write by itself in one reply.</p>
 
-    <div class="exp-head"><span class="exp-num">Act 2: Experiment 8, replayed</span><h3>Does the paper's Qwen edit stop reasoning loops?</h3></div>
-    <p>In the paper, Astra edited 0.016% of the weights of Qwen3.5-0.8B. The edit raised MATH-500 accuracy from 7.9% to 48.1%. Answers cut off at the token limit fell from 93% to 33%.</p>
-    <p>We did not make a new edit. We replayed the paper's edit on one problem and compared the base and edited models. The edited checkpoint is a rebuild on Hugging Face. Its two edited tensors in layers 15 and 19 match the sha256 hashes in the paper's manifest.</p>
+    <h2 id="qwen">The paper's Qwen edit, replayed</h2>
+    <p class="notice"><b>This part does not test Claude.</b> Claude did not write this edit. Astra wrote it for the paper. We ran the paper's published edited model next to the base model. This part shows only whether the paper's edit works as the paper says.</p>
+    <div class="exp-head"><span class="exp-num">Experiment 8, replayed</span><h3>Does the paper's Qwen edit stop reasoning loops?</h3></div>
+    <p>In the paper, Astra had to make Qwen3.5-0.8B better at math, with no gradients. Astra found weights that cause reasoning loops. Qwen's own model card warns about these loops. Astra changed 131,072 weights, 0.016% of the model. These are 64 columns in each of two matrices: the <code>down_proj</code> matrices of layers 15 and 19.</p>
+    <p>The edit raised MATH-500 accuracy from 7.9% to 48.1%. Answers cut off at the token limit fell from 93% to 33%.</p>
+    <p>We did not make a new edit. We replayed the paper's edit on one problem and compared the base and edited models. The edited checkpoint is a rebuild on Hugging Face. Its two edited tensors match the sha256 hashes in the paper's manifest. We did not compare its other tensors with the base model.</p>
     <details class="setup">
       <summary>Setup</summary>
       <div class="setup-body">
@@ -604,6 +614,7 @@ whole-number divisors is 9.
       </div>
       <figcaption><b>Table 3.</b> Tail compression is the zlib ratio of the last 4,000 characters. A high ratio means the text repeats.</figcaption>
     </figure>
+    <p>Seed 1 shows the change most clearly. The base model checks if 56 divides 196, then repeats the same check until the limit. The edited model makes the same check once, rules out 56 and continues. It then lists all nine divisors: 1, 2, 4, 7, 14, 28, 49, 98 and 196.</p>
     <p>One problem is a demonstration, not a measurement. We chose a problem where the paper's base model failed in 4 of 4 samples and the edited model passed in 4 of 4. 86 of the 500 problems show this pattern.</p>
     <p>The paper also shows that the edit removes loops. It does not add ability. On Gemma 3 270M, which rarely loops, no edit by Astra changed MATH-500 by more than about 1 point.</p>
 
@@ -658,11 +669,12 @@ whole-number divisors is 9.
       <li><b>One effort level.</b> Claude ran at effort <code>high</code>, one level below the paper's <code>xhigh</code>.</li>
       <li><b>Patches by agents with tools.</b> All patches and counterfactuals came from analysis agents with a simulator and Astra's network. They measure how much a mechanism matters. They do not measure what Claude writes in one reply.</li>
       <li><b>Seeds.</b> Most mechanism counts use seeds 0 to 199. Only the headline scores use all 1,000 episodes.</li>
+      <li><b>The Qwen check is small.</b> It uses one problem that favours the edit, and two seeds per model. It ran in transformers, not vLLM, with a presence penalty that we wrote by hand. Its result applies to the paper's edit, not to Claude.</li>
       <li><b>Single source.</b> The original paper is a blog post. It is not peer reviewed. Astra's numbers come from its logs.</li>
     </ul>
 
     <h2 id="next">What comes next?</h2>
-    <p>Three tests can answer the open questions. First, run many more replies per game, to measure how often Claude finds each plan. Second, run Claude at effort <code>xhigh</code> and <code>max</code>, to match the paper's setting. Third, run the same prompts on other frontier models. If more models pass the PPO-100M bar, the evidence becomes stronger that weight-space programming is a general skill of frontier models.</p>
+    <p>Four tests can answer the open questions. First, run many more replies per game, to measure how often Claude finds each plan. Second, run Claude at effort <code>xhigh</code> and <code>max</code>, to match the paper's setting. Third, run the same prompts on other frontier models. If more models pass the PPO-100M bar, the evidence becomes stronger that weight-space programming is a general skill of frontier models. Fourth, give Claude the task of Experiment 8: remove the loops in Qwen3.5-0.8B by editing its weights. Then score that edit on all 500 MATH-500 problems. This test measures Claude, not the paper's edit.</p>
 
     <section class="appendix">
       <h3>Code, data and logs</h3>
