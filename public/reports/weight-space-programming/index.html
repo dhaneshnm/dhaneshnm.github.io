@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weight-Space Programming, Replicated · Dhanesh Neela Mana</title>
+<meta name="description" content="A replication of Experiment 5 of Sparks of Weight-Space Programming with Claude Opus 5.5 as the editor. Its best one-shot networks reach 87%, 97% and 86% of GPT-6 Astra's score.">
+<link rel="canonical" href="https://dneelamana.com/reports/weight-space-programming/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Can Claude also write neural network weights from scratch?">
+<meta property="og:description" content="A replication of Experiment 5 of Sparks of Weight-Space Programming with Claude Opus 5.5 as the editor. Its best one-shot networks reach 87%, 97% and 86% of GPT-6 Astra's score.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dneelamana.com/reports/weight-space-programming/">
+<meta property="og:image" content="https://dneelamana.com/reports/weight-space-programming/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-11-06">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@dneelamana">
+<meta name="twitter:image" content="https://dneelamana.com/reports/weight-space-programming/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:ital,wght@0,300..700;1,300..700&display=swap">
+<style>
+/* Layout: one reading column (760px) in the manner of the original Distill post; a pale title band;
+   figures stay inside the column; green marks Astra, orange marks Claude, grey marks PPO. */
+:root {
+  --bg: #ffffff;
+  --text: #333333;
+  --strong: #222222;
+  --muted: #5f6b65;
+  --title-bg: #f3f9f5;
+  --panel-line: #dde9e2;
+  --accent: #2e996a;
+  --accent-soft: #8fc8a9;
+  --accent-bg: #dbece2;
+  --astra: #118659;
+  --claude: #c0581f;
+  --claude-bg: #fbefe6;
+  --ppo: #7d8782;
+  --rule: rgba(0, 0, 0, 0.1);
+  --hair: #e6e6e6;
+  --hair-strong: #bbbbbb;
+  --code-bg: #f1f3f6;
+  --term-bg: #f6f7f9;
+  --loop: #b3261e;
+  --loop-bg: #fcefee;
+
+  --font-sans: 'Source Sans 3', 'Hiragino Sans', 'Noto Sans', 'Lato', Verdana, Helvetica, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111513; --text: #d3dbd7; --strong: #eef3f0; --muted: #9aa7a0;
+    --title-bg: #16201b; --panel-line: #26372e;
+    --accent: #4fbf8b; --accent-soft: #3d8a66; --accent-bg: #1e3529;
+    --astra: #5fd19b; --claude: #ef9459; --claude-bg: #2d1f16; --ppo: #8f9b95;
+    --rule: rgba(255, 255, 255, 0.12); --hair: #29312d; --hair-strong: #4b5550;
+    --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111513; --text: #d3dbd7; --strong: #eef3f0; --muted: #9aa7a0;
+  --title-bg: #16201b; --panel-line: #26372e;
+  --accent: #4fbf8b; --accent-soft: #3d8a66; --accent-bg: #1e3529;
+  --astra: #5fd19b; --claude: #ef9459; --claude-bg: #2d1f16; --ppo: #8f9b95;
+  --rule: rgba(255, 255, 255, 0.12); --hair: #29312d; --hair-strong: #4b5550;
+  --code-bg: #1c2320; --term-bg: #171d1a; --loop: #f08a80; --loop-bg: #2c1817;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+html { -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+}
+@media (min-width: 1024px) { body { font-size: 18px; } }
+.band, .page {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.col { max-width: 760px; margin: 0 auto; }
+.col > * { min-width: 0; }
+p { margin: 0 0 1em; }
+b, strong { font-weight: 600; color: var(--strong); }
+a { color: var(--astra); text-decoration: underline 1px var(--accent-soft); text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+code, pre, .mono { font-family: var(--font-mono); }
+code { padding: 1px 5px; font-size: 0.82em; background: var(--code-bg); border-radius: 4px; color: var(--text); overflow-wrap: anywhere; }
+.astra { color: var(--astra); font-weight: 600; }
+.claude { color: var(--claude); font-weight: 600; }
+
+/* ---------- Title band and byline ---------- */
+.band { background: var(--title-bg); padding-block: 48px 32px; }
+.kicker { display: block; margin: 0 0 6px; font-size: 24px; font-weight: 400; color: var(--strong); }
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 5.4vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--strong);
+  text-wrap: balance;
+}
+.dek { margin: 18px 0 0; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--muted); max-width: 40em; }
+.byline { border-bottom: 1px solid var(--rule); padding-block: 1.4rem; font-size: 15px; line-height: 1.7; }
+.byline-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
+.byline h3 { margin: 0 0 2px; font-size: 13.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
+.byline p { margin: 0; }
+.byline-note { margin-top: 10px !important; font-size: 14px; color: var(--muted); }
+@media (max-width: 560px) { .byline-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Article ---------- */
+main.page { padding-block: 28px 64px; }
+h2 {
+  margin: 56px 0 18px;
+  padding-bottom: 0.55rem;
+  font-size: clamp(28px, 3.6vw, 34px);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--text);
+  border-bottom: 2px solid var(--accent-bg);
+  text-wrap: balance;
+}
+h3 { margin: 34px 0 12px; font-size: 24px; font-weight: 300; line-height: 1.25; color: var(--text); text-wrap: balance; }
+.exp-head { margin: 44px 0 14px; }
+.exp-num { display: block; font-size: 14px; font-weight: 700; letter-spacing: 0.02em; color: var(--astra); }
+.exp-head h3 { margin: 2px 0 0; font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--strong); }
+ul.plain { margin: 0 0 1em; padding-left: 1.2em; }
+ul.plain li { margin-bottom: 0.4em; }
+ul.plain li::marker { color: var(--accent); }
+
+/* TL;DR panel */
+.tldr {
+  margin: 4px 0 30px;
+  padding: 14px 20px 16px;
+  font-size: 17px;
+  line-height: 1.6;
+  background: var(--title-bg);
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+}
+.tldr > b:first-child { display: block; margin-bottom: 4px; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--strong); }
+.tldr p { margin: 0 0 8px; }
+.tldr p:last-child { margin-bottom: 0; }
+
+/* Figures */
+figure { margin: 26px 0 30px; }
+figcaption { margin: 10px auto 0; font-size: 15.5px; line-height: 1.45; color: var(--text); text-align: center; max-width: 42em; }
+figcaption .src { display: block; margin-top: 4px; font-size: 13.5px; color: var(--muted); }
+
+/* Teaser: game tabs over the side-by-side GIF */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 12px; }
+.tab {
+  font: 600 15px/1 var(--font-sans);
+  padding: 8px 14px;
+  color: var(--astra);
+  background: var(--bg);
+  border: 1.5px solid var(--accent);
+  border-radius: 0;
+  cursor: pointer;
+}
+.tab[aria-selected="true"] { color: var(--bg); background: var(--accent); }
+.tab:hover:not([aria-selected="true"]) { background: var(--accent-bg); }
+.gif-frame { background: #000; line-height: 0; border-radius: 4px; overflow: hidden; }
+.gif-frame img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.chip { padding: 6px 10px; font-size: 14px; line-height: 1.3; border: 1px solid var(--hair); border-radius: 6px; text-align: center; }
+.chip b { display: block; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.chip.zero b { color: var(--muted); }
+.chip.a b { color: var(--astra); }
+.chip.c b { color: var(--claude); }
+.chip.c { background: var(--claude-bg); border-color: transparent; }
+@media (max-width: 480px) { .chip { font-size: 12.5px; padding: 6px 4px; } .chip b { font-size: 17px; } }
+
+/* Setup panel, the green "i" button of the original, inline here */
+.setup { margin: 10px 0 18px; }
+.setup > summary {
+  display: inline-block;
+  padding: 3px 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--astra);
+  border: 1.5px solid var(--astra);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.setup > summary::-webkit-details-marker { display: none; }
+.setup > summary::before {
+  content: "i";
+  display: inline-block;
+  width: 15px; height: 15px;
+  margin-right: 6px;
+  font: italic 700 11px/15px Georgia, serif;
+  text-align: center;
+  color: var(--bg);
+  background: var(--astra);
+  border-radius: 50%;
+  vertical-align: 1px;
+}
+.setup[open] > summary { color: var(--bg); background: var(--astra); }
+.setup[open] > summary::before { color: var(--astra); background: var(--bg); }
+.setup-body { margin-top: 8px; padding: 12px 16px; font-size: 15px; line-height: 1.5; border: 1px solid var(--hair-strong); }
+.setup-body ul { margin: 0; padding-left: 18px; }
+.setup-body li { margin-bottom: 4px; }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.results { margin: 0 auto; font-size: 16px; line-height: 1.4; border-collapse: collapse; }
+table.results th, table.results td { padding: 6px 14px 6px 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hair); }
+table.results th { font-weight: 600; color: var(--text); border-bottom: 1px solid var(--hair-strong); }
+table.results th:last-child, table.results td:last-child { padding-right: 0; }
+table.results .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+table.results tr > :first-child { white-space: nowrap; }
+table.results th.a, table.results td.a { color: var(--astra); }
+table.results th.c { color: var(--claude); }
+table.results td.best { color: var(--claude); font-weight: 600; }
+table.results td.dim { color: var(--muted); }
+table.results.wrap td { white-space: normal; }
+table.results.wrap td:first-child { white-space: nowrap; }
+
+/* Charts */
+.chart { width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--font-sans); fill: var(--muted); }
+.chart .t-game { font-size: 15px; font-weight: 600; fill: var(--strong); }
+.chart .t-lane { font-size: 12.5px; }
+.chart .t-tick { font-size: 12px; font-variant-numeric: tabular-nums; }
+.chart .t-astra { font-size: 13px; font-weight: 600; fill: var(--astra); }
+.chart .t-claude { font-size: 12.5px; font-weight: 600; fill: var(--claude); }
+.chart .t-val { font-size: 12px; font-variant-numeric: tabular-nums; }
+.chart .axis { stroke: var(--hair-strong); stroke-width: 1; fill: none; }
+.chart .grid { stroke: var(--hair); stroke-width: 1; fill: none; }
+.chart .m-astra { fill: var(--astra); }
+.chart .g-astra { stroke: var(--astra); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.6; fill: none; }
+.chart .m-claude { fill: var(--claude); stroke: var(--bg); stroke-width: 1.5; }
+.chart .m-ppo-100 { fill: var(--bg); stroke: var(--ppo); stroke-width: 1.8; }
+.chart .m-ppo-500 { fill: var(--ppo); }
+.chart .b-claude { fill: var(--claude); }
+.chart .b-astra { fill: var(--astra); }
+.chart .cap { stroke: var(--loop); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+.chart .t-cap { font-size: 12px; fill: var(--loop); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: center; margin-top: 8px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend svg { width: 14px; height: 14px; overflow: visible; }
+.legend .m-astra { fill: var(--astra); }
+.legend .m-claude { fill: var(--claude); }
+.legend .m-ppo-100 { fill: var(--bg); stroke: var(--ppo); stroke-width: 1.8; }
+.legend .m-ppo-500 { fill: var(--ppo); }
+
+/* Code and transcripts */
+pre.edits {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  background: var(--code-bg);
+  border-radius: 6px;
+  overflow-x: auto;
+  color: var(--text);
+}
+pre.edits .cm { color: var(--muted); }
+pre.edits .lhs { color: var(--claude); font-weight: 600; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 640px) { .pair { grid-template-columns: 1fr; } }
+.term { min-width: 0; border: 1px solid var(--hair); border-radius: 6px; overflow: hidden; background: var(--term-bg); }
+.term-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; padding: 8px 12px; font-size: 14px; border-bottom: 1px solid var(--hair); background: var(--bg); }
+.term-head b { font-size: 15px; }
+.term-head .stat { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.term pre { margin: 0; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow-y: auto; }
+.term.base pre { color: var(--loop); }
+.term.base .term-head b { color: var(--loop); }
+.term.edit .term-head b { color: var(--astra); }
+.term .fade { color: var(--muted); }
+.term .ans { color: var(--astra); font-weight: 600; background: var(--accent-bg); padding: 0 3px; border-radius: 3px; }
+.verdict { display: inline-block; padding: 1px 8px; font-size: 12.5px; font-weight: 600; border-radius: 999px; }
+.verdict.no { color: var(--loop); background: var(--loop-bg); }
+.verdict.yes { color: var(--astra); background: var(--accent-bg); }
+
+/* Quote from a reasoning summary */
+blockquote.said { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--claude); color: var(--text); }
+blockquote.said p { margin: 0 0 4px; font-size: 19px; font-style: italic; font-weight: 300; }
+blockquote.said cite { font-size: 14px; font-style: normal; color: var(--muted); }
+
+/* Key figures in the cost section */
+.figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 8px; }
+.fig-n { border-top: 2px solid var(--accent-bg); padding-top: 8px; }
+.fig-n b { display: block; font-size: 26px; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--strong); }
+.fig-n span { font-size: 14px; color: var(--muted); line-height: 1.3; display: block; margin-top: 4px; }
+@media (max-width: 640px) { .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Appendix */
+.appendix { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 14px; line-height: 1.5; color: var(--text); }
+.appendix h3 { margin: 22px 0 6px; font-size: 14px; font-weight: 700; color: var(--strong); }
+.appendix p { margin: 0 0 8px; }
+.appendix pre { margin: 6px 0 0; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; background: var(--code-bg); border-radius: 6px; overflow-x: auto; white-space: pre; }
+
+/* ---------- Page reset (the artifact host supplied these) ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* ---------- Site bar, in the manner of the original post's masthead ---------- */
+.sitebar { padding-block: 0; border-bottom: 1px solid var(--rule); background: var(--bg); font-size: 16px; }
+.sitebar-inner { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; padding-block: 14px; }
+.sitebar a { color: var(--muted); text-decoration: none; }
+.sitebar a:hover { color: var(--text); }
+.sitebar .home { color: var(--strong); font-weight: 700; margin-right: auto; }
+.sitebar .here { color: var(--astra); }
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="band sitebar"><nav class="col sitebar-inner" aria-label="Site"><a class="home" href="/">Dhanesh Neela Mana</a><a class="here" href="/reports/">Reports</a><a href="https://github.com/dhaneshnm/wsp-replication">Code and data</a></nav></div>
+
+<header class="band">
+  <div class="col">
+    <h1><span class="kicker">Sparks of Weight-Space Programming, replicated:</span>Can Claude also write neural network weights from scratch?</h1>
+    <p class="dek">We gave Claude Opus 5.5 the prompts that GPT-6 Astra got in Experiment 5. Claude wrote working networks for all three games. Its best replies come close to Astra. Its typical replies do not.</p>
+  </div>
+</header>
+
+<div class="band byline" style="background: var(--bg)">
+  <div class="col">
+    <div class="byline-grid">
+      <div>
+        <h3>Replication</h3>
+        <p><a href="/">Dhanesh Neela Mana</a></p>
+      </div>
+      <div>
+        <h3>Original work</h3>
+        <p><a href="https://rikiyat.github.io/blog/weight-space-programming/">Takehi, Teoh, Zhang, Khattab</a></p>
+        <p>MIT CSAIL, November 2, 2026</p>
+      </div>
+      <div>
+        <h3>Published</h3>
+        <p>November 6, 2026</p>
+      </div>
+    </div>
+    <p class="byline-note">The experiments, the analysis and this report were made with Claude Code. This is an independent replication. It is not peer reviewed, and the original authors did not review it.</p>
+  </div>
+</div>
+
+<main class="page">
+  <div class="col">
+
+    <div class="tldr">
+      <b>TL;DR</b>
+      <p><b>Partly.</b> Claude Opus 5.5 can write a working game-playing network as text, in one reply, with no tools and no training.</p>
+      <p>We used the paper's prompts byte for byte and the paper's scoring protocol. We changed only the model that writes the weights. Each game got three replies.</p>
+      <p>In each game, one of the three replies came close to Astra: <b>87%, 97% and 86%</b> of its score. The median replies reached 51%, 14% and 62%. Eight of the nine networks beat PPO trained for 100 million steps.</p>
+      <p>In every game, at least one reply found Astra's strategy without access to Astra's replies. In Breakout and Asterix, the best networks lose to Astra mainly on <b>sticky actions</b>. A sticky action is a 10% chance that the game repeats the previous action.</p>
+      <p>We also replayed the paper's Qwen3.5-0.8B edit on one math problem. The base model repeated the same lines until the token limit. The edited model gave the correct answer. The editor calls cost about $11.75.</p>
+    </div>
+
+    <figure id="teaser">
+      <div class="tabs" role="tablist" aria-label="Game">
+        <button class="tab" role="tab" id="t-breakout" aria-controls="p-breakout" aria-selected="true">Breakout</button>
+        <button class="tab" role="tab" id="t-seaquest" aria-controls="p-seaquest" aria-selected="false" tabindex="-1">Seaquest</button>
+        <button class="tab" role="tab" id="t-asterix" aria-controls="p-asterix" aria-selected="false" tabindex="-1">Asterix</button>
+      </div>
+      <div role="tabpanel" id="p-breakout" aria-labelledby="t-breakout">
+        <div class="gif-frame"><img src="/reports/weight-space-programming/demo/breakout.gif" width="768" height="288" alt="Breakout, seed 7. Left: zero weights, the paddle does not move. Middle: Astra's network. Right: Claude's attempt 2. Both written networks follow the ball and clear bricks."></div>
+        <div class="chips">
+          <div class="chip zero"><b>0.5</b>Zero weights</div>
+          <div class="chip a"><b>517.4</b>Astra (GPT-6)</div>
+          <div class="chip c"><b>449.7</b>Claude, attempt 2</div>
+        </div>
+      </div>
+      <div role="tabpanel" id="p-seaquest" aria-labelledby="t-seaquest" hidden>
+        <div class="gif-frame"><img src="/reports/weight-space-programming/demo/seaquest.gif" width="768" height="288" alt="Seaquest, seed 7. Left: zero weights. Middle: Astra's network parks at column 5 and fires. Right: Claude's attempt 3 parks at column 8 and fires."></div>
+        <div class="chips">
+          <div class="chip zero"><b>0.1</b>Zero weights</div>
+          <div class="chip a"><b>53.1</b>Astra (GPT-6)</div>
+          <div class="chip c"><b>51.7</b>Claude, attempt 3</div>
+        </div>
+      </div>
+      <div role="tabpanel" id="p-asterix" aria-labelledby="t-asterix" hidden>
+        <div class="gif-frame"><img src="/reports/weight-space-programming/demo/asterix.gif" width="768" height="288" alt="Asterix, seed 7. Left: zero weights. Middle: Astra's network. Right: Claude's attempt 3. Both networks keep the player in column 5 and move up and down."></div>
+        <div class="chips">
+          <div class="chip zero"><b>0.5</b>Zero weights</div>
+          <div class="chip a"><b>53.2</b>Astra (GPT-6)</div>
+          <div class="chip c"><b>45.6</b>Claude, attempt 3</div>
+        </div>
+      </div>
+      <figcaption><b>Figure 1.</b> The same game seed (7), first 400 steps, for three networks: zero weights, Astra's network and Claude's best attempt. Nobody trained these networks. Each model wrote its weights as text. Scores are means over 1,000 episodes.</figcaption>
+    </figure>
+
+    <h2 id="question">The question</h2>
+    <p>The post by <a href="https://rikiyat.github.io/blog/weight-space-programming/">Takehi et al.</a> shows that GPT-6 Astra can write neural network weights directly as text. In Experiment 5, Astra wrote a policy network for three MinAtar games, in one reply per game. It had no data, no gradients and no tools. Its networks beat PPO trained for 100 million steps.</p>
+    <p>One model is one data point. Thus we asked a simple question. Can another frontier model do this too? We kept the prompts, the network and the scorer the same. We changed only the model that writes the weights.</p>
+    <p>Claude Opus 5.5 has a training cutoff of June 2026. The post appeared on November 2, 2026. Thus Claude did not see Astra's replies or networks.</p>
+
+    <div class="exp-head"><span class="exp-num">Experiment 5, replicated</span><h3>Can Claude write weights from scratch?</h3></div>
+    <p>Each game gets the paper's prompt, without changes. The prompt gives the game rules, the game source code, the network layout and the scoring rules. It asks for the weights as statements in a small edits language, for example <code>W1[540:600:6, 0] = [0,-1,-2,...]</code>. All weights start at zero.</p>
+    <p>Claude wrote one reply per attempt, with no tools. The network did not play before we scored it. We scored each network on 1,000 episodes with the paper's protocol.</p>
+    <details class="setup">
+      <summary>Setup</summary>
+      <div class="setup-body">
+        <ul>
+          <li><b>Games:</b> Breakout, Seaquest and Asterix from MinAtar 1.0.15, on a 10&times;10 grid</li>
+          <li><b>Network:</b> 600 &rarr; 32 &rarr; 32 &rarr; 6 (tanh), the same shape as the PPO networks. Every weight starts at 0</li>
+          <li><b>Input and output:</b> the grid in 6 channels (player, danger, reward, projectile, trail, gauge), and 6 action logits (no-op, left, up, right, down, fire)</li>
+          <li><b>Editor:</b> Claude Opus 5.5 (<code>claude-opus-5-5</code>), adaptive thinking, effort <code>high</code>, one reply, no tools</li>
+          <li><b>Output cap:</b> 64k tokens for Breakout and Asterix, 128k tokens for Seaquest</li>
+          <li><b>Scoring:</b> 1,000 episodes on seeds 0 to 999. Actions are sampled from the softmax. Sticky actions 0.1. At most 10,000 steps per episode</li>
+          <li><b>Attempts:</b> 3 per game. We report all three, the best and the median</li>
+          <li><b>Hardware for scoring:</b> a Mac mini (Apple M4, 16 GB)</li>
+        </ul>
+      </div>
+    </details>
+    <p><b>Claude's best networks reach 87%, 97% and 86% of Astra's score. In every game, the best network and the median network beat PPO trained for 100 million steps. All three Breakout networks also beat PPO trained for 500 million steps.</b></p>
+
+    <figure>
+      <div class="tbl-wrap">
+        <table class="results">
+          <thead>
+            <tr><th>Game</th><th class="num">Zero</th><th class="num">PPO 100M</th><th class="num">PPO 500M</th><th class="num a">Astra</th><th class="num c">Claude #1</th><th class="num c">#2</th><th class="num c">#3</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Breakout</td><td class="num dim">0.5</td><td class="num">15.8</td><td class="num">25.3</td><td class="num a"><b class="astra">517.4</b></td><td class="num">30.0</td><td class="num best">449.7</td><td class="num">261.5</td></tr>
+            <tr><td>Seaquest</td><td class="num dim">0.1</td><td class="num">5.6</td><td class="num"><b>88.9</b></td><td class="num a">53.1</td><td class="num">7.4</td><td class="num">7.5</td><td class="num best">51.7</td></tr>
+            <tr><td>Asterix</td><td class="num dim">0.5</td><td class="num">25.8</td><td class="num"><b>55.2</b></td><td class="num a">53.2</td><td class="num">33.0</td><td class="num">23.4</td><td class="num best">45.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 1.</b> Mean score over 1,000 episodes. PPO and Astra are the paper's published numbers. Zero weights and Claude were measured here. The best Claude attempt per game is in orange.<span class="src">Data: <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/runs/scoreboard.txt">runs/scoreboard.txt</a> and each attempt's <code>run.json</code></span></figcaption>
+    </figure>
+
+    <figure>
+      <div class="chart" id="strip" role="img" aria-label="Scores per game on a linear scale. Breakout: PPO 15.8 and 25.3, Astra 517.4, Claude 30.0, 449.7 and 261.5. Seaquest: PPO 5.6 and 88.9, Astra 53.1, Claude 7.4, 7.5 and 51.7. Asterix: PPO 25.8 and 55.2, Astra 53.2, Claude 33.0, 23.4 and 45.6."></div>
+      <div class="legend" aria-hidden="true">
+        <span><svg viewBox="-7 -7 14 14"><rect class="m-ppo-100" x="-4.5" y="-4.5" width="9" height="9"/></svg>PPO 100M</span>
+        <span><svg viewBox="-7 -7 14 14"><rect class="m-ppo-500" x="-4.5" y="-4.5" width="9" height="9"/></svg>PPO 500M</span>
+        <span><svg viewBox="-7 -7 14 14"><path class="m-astra" d="M0 -6.5 L6.5 0 L0 6.5 L-6.5 0 Z"/></svg>Astra, 1 reply</span>
+        <span><svg viewBox="-7 -7 14 14"><circle class="m-claude" cx="0" cy="0" r="6"/></svg>Claude, 3 replies</span>
+      </div>
+      <figcaption><b>Figure 2.</b> One reply can land anywhere from PPO-100M level to near Astra. Each game has its own linear scale. The dashed line marks Astra's score. Zero weights score 0.1 to 0.5, at the left edge.</figcaption>
+    </figure>
+
+    <p>Three points help to read these numbers.</p>
+    <ul class="plain">
+      <li><b>PPO is a best-of-seeds number.</b> Astra and each Claude attempt are single replies. PPO is the best of 10 training seeds, or of 3 seeds for Seaquest at 100M and for every game at 500M. For example, Seaquest PPO at 500M scored 88.9 on one seed, and 7.5 and 4.4 on the other two.</li>
+      <li><b>We rescored Astra on our harness.</b> Astra's published networks scored 502.9, 54.6 and 55.4 on the same 1,000 seeds. These agree with the published numbers within about 2 standard errors.</li>
+      <li><b>The spread is real.</b> The standard errors of Claude's scores are 0.2 to 9.3 points. Only Seaquest attempts 1 and 2 (7.41 &plusmn; 0.21 and 7.45 &plusmn; 0.24) are the same within noise. Seaquest attempt 3 is within noise of Astra (51.7 against 53.1).</li>
+    </ul>
+    <p>The paper reports one reply per game. Our three replies per game cover a wide range. Thus one reply is a weak measure of this ability. Our plan set a rule before the run: if Claude beats PPO at 100M steps in every game, frontier models probably share the ability. Claude meets this rule. It does so reliably only at PPO-100M level, and at Astra's level only in some replies.</p>
+
+    <h2 id="how">How does Claude do it?</h2>
+    <p>We read each reply and probed each network in the simulator. Nine analyst agents did this work, one per attempt. Eighteen checker agents tried to refute each claim, two per attempt. We removed the 28 claims that a checker refuted. All agents were Claude Opus 5.5 with tools. No human checked the mechanism claims.</p>
+    <p>Each network is exactly the edits in its reply. All 1,396 edit statements in the nine replies parsed with no errors. Thus no attempt failed because of the parser. Most mechanism counts below use seeds 0 to 199.</p>
+
+    <h3>Breakout: the same machine as Astra, with a different aim</h3>
+    <p>All three attempts found the same design as Astra, independently. The design predicts where the ball will land and moves the paddle there. Attempt 2 is the cleanest example. Its reply states the plan in one line: <i>&ldquo;Strategy: predict where the ball will land and wait there.&rdquo;</i></p>
+    <ul class="plain">
+      <li><b>Layer 1, units 0 to 7,</b> store four lookup tables in the ball weights. Each ball cell holds the column where the ball will reach row 8.</li>
+      <li><b>Units 8 and 9</b> read the direction of the ball from the ball cell minus the trail cell.</li>
+      <li><b>Layer 2</b> has 8 AND gates. Only the gate for the current ball direction sends its comparison to the output.</li>
+      <li><b>No unit reads the bricks.</b> All brick-channel weights are zero.</li>
+    </ul>
+    <figure>
+<pre class="edits"><span class="cm"># unit 0: R_D+ (descent, dx=+1), unit 1: L_D+</span>
+<span class="lhs">W1[3:600:6, 0]</span> = [8,9,9,8,7,6,5,4,3,2,
+ 7,8,9,9,8,7,6,5,4,3,
+ 6,7,8,9,9,8,7,6,5,4,
+ 5,6,7,8,9,9,8,7,6,5,
+ 4,5,6,7,8,9,9,8,7,6,
+ 3,4,5,6,7,8,9,9,8,7,
+ 2,3,4,5,6,7,8,9,9,8,
+ 1,2,3,4,5,6,7,8,9,9,
+ 0,1,2,3,4,5,6,7,8,9,
+ 0,1,2,3,4,5,6,7,8,9]
+<span class="lhs">W1[540:600:6, 0]</span> = [0,-1,-2,-3,-4,-5,-6,-7,-8,-9]
+<span class="lhs">W1[:, 0]</span> *= 10</pre>
+      <figcaption><b>Figure 3.</b> The first statements of Claude's Breakout attempt 2, as written in the reply. The 10&times;10 table gives each ball cell its predicted column on row 8, for a ball that falls to the right. Walls fold the path back. The paddle row subtracts the paddle column. The unit is on when the target is to the right of the paddle.<span class="src">Reply: <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/runs/claude-opus-5-5/breakout/attempt2/answer.md">runs/claude-opus-5-5/breakout/attempt2/answer.md</a></span></figcaption>
+    </figure>
+    <p>The three attempts differ in one design choice each.</p>
+    <figure>
+      <div class="tbl-wrap">
+        <table class="results wrap">
+          <thead><tr><th>Attempt</th><th class="num">Score</th><th>Design choice</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td>#1</td><td class="num">30.0</td><td>Aims at the cell where the ball lands in row 9.</td><td>A catch there reverses the ball. After 21 bricks, the game repeats every 36 steps. Retargeting gives 147.5.</td></tr>
+            <tr><td>#2</td><td class="num best">449.7</td><td>Aims at the ball's column in row 8.</td><td>This keeps the ball's direction. With sticky actions off, it never misses and scores 834.</td></tr>
+            <tr><td>#3</td><td class="num">261.5</td><td>Same as #2, except the table for a rising ball.</td><td>It assumes a bounce at row 2, not row 4. With #2's table, it scores the same as #2 on all 200 seeds.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+    <p>Attempt 2 has one weak point. Astra accepts either valid catch cell in rows 6 to 8. Claude's network steps toward a single cell. If the game repeats that step, the paddle overshoots and misses. This causes 47 of its 149 misses. Astra has 4 such misses.</p>
+    <p>An analysis agent put two parts of Astra's network into attempt 2: the catch tolerance (54 weights) and the target for a ball on row 1 (40 weights). After this change, attempt 2 played the same as Astra on all 200 test seeds.</p>
+
+    <h3>Seaquest: one attempt found Astra's plan, two built turrets</h3>
+    <p>Attempt 3 (51.7) parks the submarine at column 8, faces left and fires. It moves only up and down. Astra uses the same plan at column 5. In the reply's own words: <i>&ldquo;The submarine parks at column 8, facing left, and fires along its row.&rdquo;</i></p>
+    <p>Attempt 3 kills faster than Astra, 3.7 against 3.3 kills per 100 steps. It also dies sooner, after 1,241 steps against 1,432. It goes up for air late, when oxygen falls below 40. Astra goes up below 60. Thus attempt 3 runs out of oxygen in 35 of 200 episodes, and Astra in 5.</p>
+    <p>Attempts 1 and 2 (7.4 and 7.5) stay in the middle of the screen and turn to face enemies. They read their own position through windows fixed to absolute columns. Enemy trails and divers confuse these windows. The submarine dies after about 300 to 350 steps.</p>
+
+    <h3>Asterix: Astra's strategy, without its lookahead</h3>
+    <p>All three attempts lock the player to column 5. The player moves up and down to avoid enemies and collect treasure. Astra does the same.</p>
+    <p>No Claude attempt checks the row two steps away. A sticky repeat of an up or down move lands the player there. These repeats cause 116, 175 and 168 of 200 deaths in attempts 1, 2 and 3. Astra loses 45 of 200 this way.</p>
+    <p>Astra's reply adds a sticky-action lookahead on purpose. An analysis agent set its 12 lookahead weights to zero. Astra's score then fell from 57.7 to 16.6.</p>
+    <p>Claude's choices for a single step are cleaner than Astra's. Attempt 3 never chose a fatal move when a safe move was available. Astra did so in 101 of its 200 deaths. With sticky actions off, attempt 3 scores 174.8 and Astra scores 70.9. Attempt 3 also collects 76% of the treasure, and Astra 68%.</p>
+    <blockquote class="said">
+      <p>&ldquo;an unavoidable but minor risk&rdquo;</p>
+      <cite>Claude's reasoning summary for Asterix attempt 3, about a sticky repeat into a blocked row. The checkers found no evidence that this remark caused the missing check.</cite>
+    </blockquote>
+
+    <h2 id="sticky">Sticky actions separate the best networks from Astra</h2>
+    <p>In each game, at least one Claude attempt found Astra's strategy. In Breakout and Asterix, all three attempts did. For the best attempts in these two games, the remaining gap to Astra comes from sticky actions. Claude's designs look one step ahead. Astra's designs absorb a repeated action.</p>
+    <figure>
+      <div class="tbl-wrap">
+        <table class="results wrap">
+          <thead><tr><th>Game</th><th>Failures after a sticky repeat (seeds 0 to 199)</th><th class="num c">Claude</th><th class="num a">Astra</th></tr></thead>
+          <tbody>
+            <tr><td>Breakout</td><td>Misses after a repeated paddle step</td><td class="num">47 of 149 misses (#2)</td><td class="num a">4</td></tr>
+            <tr><td>Seaquest</td><td>Deaths after a repeated move into a flagged row</td><td class="num">129 of 200 (#3)</td><td class="num a">127 of 200</td></tr>
+            <tr><td>Asterix</td><td>Deaths after a repeated up or down move</td><td class="num">116, 175, 168 of 200</td><td class="num a">45 of 200</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 2.</b> In Seaquest, Claude and Astra use the same one-row check and lose about equally to sticky actions. With sticky actions off, they score 113 and 106. In Seaquest, the clearer difference is the late trip up for air.<span class="src">Data: <a href="https://github.com/dhaneshnm/wsp-replication/tree/main/runs/analysis">runs/analysis/analysis_*.json</a></span></figcaption>
+    </figure>
+    <p>The weaker attempts fail for other reasons. Breakout attempt 1 aims at the wrong catch cell. Seaquest attempts 1 and 2 misread their own position. Asterix attempt 1 collects too little treasure.</p>
+    <p>Small patches close the gap for the best attempts. Analysis agents changed 26 to 94 parameters in each best network. These patches brought each best attempt to Astra's level or higher on seeds 0 to 199. The agents had Astra's network for comparison. Thus these patches do not show what Claude can write by itself in one reply.</p>
+
+    <div class="exp-head"><span class="exp-num">Act 2: Experiment 8, replayed</span><h3>Does the paper's Qwen edit stop reasoning loops?</h3></div>
+    <p>In the paper, Astra edited 0.016% of the weights of Qwen3.5-0.8B. The edit raised MATH-500 accuracy from 7.9% to 48.1%. Answers cut off at the token limit fell from 93% to 33%.</p>
+    <p>We did not make a new edit. We replayed the paper's edit on one problem and compared the base and edited models. The edited checkpoint is a rebuild on Hugging Face. Its two edited tensors in layers 15 and 19 match the sha256 hashes in the paper's manifest.</p>
+    <details class="setup">
+      <summary>Setup</summary>
+      <div class="setup-body">
+        <ul>
+          <li><b>Problem:</b> MATH-500 <code>number_theory/572</code>, &ldquo;How many positive whole-number divisors does 196 have?&rdquo; The answer is 9</li>
+          <li><b>Models:</b> <code>Qwen/Qwen3.5-0.8B</code> and <code>RikiyaT/Qwen3.5-0.8B-weight-space-programming</code>, at pinned revisions</li>
+          <li><b>Sampling:</b> the paper's profile. Thinking on, the paper's prompt suffix, temperature 0.6, top_p 0.95, top_k 20, presence penalty 1.5, at most 32,768 new tokens</li>
+          <li><b>Runtime:</b> Hugging Face transformers on the Mac's GPU (MPS, bfloat16). The paper used vLLM. We wrote the presence penalty by hand with vLLM's rule</li>
+          <li><b>Seeds:</b> 0 and 1, for each model</li>
+        </ul>
+      </div>
+    </details>
+    <figure>
+      <div class="pair">
+        <div class="term base">
+          <div class="term-head"><b>Base model, seed 0</b><span class="stat">32,768 tokens &middot; limit reached</span></div>
+<pre><span class="fade">...</span>
+*   Wait, $14^2 = 196$.
+*   So divisors of $196$ are
+    divisors of $14^2$.
+*   Wait, $14^2 = 196$.
+*   So divisors of $196$ are
+    divisors of $14^2$.
+*   Wait, $14^2 = 196$.
+*   So divisors of $196$ are
+    divisors of $14^2$.
+*   Wait, $14^2 = 196$.
+*   So divisors of $196$ are
+    divisors of $14^2$.
+*   Wait, $14^2 = 196$.
+*   So divisors of $196$ are
+    divisors of $14^2$.
+<span class="fade">[token limit: no answer]</span></pre>
+        </div>
+        <div class="term edit">
+          <div class="term-head"><b>Edited model, seed 0</b><span class="stat">13,106 tokens &middot; finished</span></div>
+<pre><span class="fade">...</span>
+For $n = 196 = 2^2 \times 7^2$:
+*   The exponent of 2 is $e_1 = 2$.
+*   The exponent of 7 is $e_2 = 2$.
+
+Using the formula:
+$$d(196) = (2 + 1)(2 + 1)$$
+$$d(196) = 3 \times 3$$
+$$d(196) = 9$$
+
+So, the total number of positive
+whole-number divisors is 9.
+
+<span class="ans">\boxed{9}</span></pre>
+        </div>
+      </div>
+      <figcaption><b>Figure 4.</b> The last lines of each output. The base model repeats two lines until the token limit. The edited model finishes its reasoning and gives the correct answer.<span class="src">Transcripts: <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/runs/act2/act2_transcripts.json">runs/act2/act2_transcripts.json</a></span></figcaption>
+    </figure>
+    <figure>
+      <div class="tbl-wrap">
+        <table class="results wrap">
+          <thead><tr><th>Model</th><th>Seed</th><th class="num">Tokens</th><th>Answer</th><th class="num">Tail compression</th></tr></thead>
+          <tbody>
+            <tr><td>Base</td><td>0</td><td class="num">32,768</td><td><span class="verdict no">none, repeats &ldquo;Wait, 14&sup2; = 196&rdquo;</span></td><td class="num">41.2&times;</td></tr>
+            <tr><td>Base</td><td>1</td><td class="num">32,768</td><td><span class="verdict no">none, repeats &ldquo;Wait, 196 / 56?&rdquo;</span></td><td class="num">39.2&times;</td></tr>
+            <tr><td>Edited</td><td>0</td><td class="num">13,106</td><td><span class="verdict yes">9, correct</span></td><td class="num">3.5&times;</td></tr>
+            <tr><td>Edited</td><td>1</td><td class="num">12,612</td><td><span class="verdict yes">9, correct</span></td><td class="num">2.6&times;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 3.</b> Tail compression is the zlib ratio of the last 4,000 characters. A high ratio means the text repeats.</figcaption>
+    </figure>
+    <p>One problem is a demonstration, not a measurement. We chose a problem where the paper's base model failed in 4 of 4 samples and the edited model passed in 4 of 4. 86 of the 500 problems show this pattern.</p>
+    <p>The paper also shows that the edit removes loops. It does not add ability. On Gemma 3 270M, which rarely loops, no edit by Astra changed MATH-500 by more than about 1 point.</p>
+
+    <h2 id="checks">Checks on the harness</h2>
+    <p>A replication is only as good as its harness. Before we changed the model, we made sure that the harness reproduces the paper.</p>
+    <ul class="plain">
+      <li><b>Parser.</b> The parser reads Astra's three replies to Astra's published networks exactly. The maximum difference is 0.</li>
+      <li><b>Scorer.</b> Astra's networks score within about 2 standard errors of the published means.</li>
+      <li><b>Audit.</b> A workflow of 51 agents compared the parser, observation channels, policy, scorer and run settings with the prompts. It found 13 distinct candidate issues. Three verifiers voted on each issue.</li>
+      <li><b>Result of the audit.</b> Four issues passed, each by 2 votes to 1. All four are edge cases in the parser or in cut-off replies. A stricter reader then read every reply again. All 10 networks were identical, so the scores stand.</li>
+      <li><b>Clean areas.</b> The audit found no problem in the channels, the action map, sticky actions, softmax sampling or the 10,000-step cap.</li>
+    </ul>
+
+    <h2 id="differences">Differences from the paper</h2>
+    <figure>
+      <div class="tbl-wrap">
+        <table class="results wrap">
+          <thead><tr><th></th><th class="a">Paper (Astra)</th><th class="c">This replication (Claude)</th></tr></thead>
+          <tbody>
+            <tr><td>Replies per game</td><td>1</td><td>3, reported as best and median</td></tr>
+            <tr><td>Reasoning effort</td><td><code>xhigh</code> (Codex CLI)</td><td><code>high</code> (adaptive thinking). Opus 5.5 also accepts <code>xhigh</code> and <code>max</code>. We did not change the effort, so its effect is unknown</td></tr>
+            <tr><td>Output cap</td><td>not stated</td><td>64k for Breakout and Asterix (never reached). 128k for Seaquest</td></tr>
+            <tr><td>Context</td><td>prompt, plus Codex instructions and notices (about 3k tokens)</td><td>prompt, plus the same one-line system text</td></tr>
+            <tr><td>Reasoning shown</td><td>summaries</td><td>summaries (does not change behaviour or cost)</td></tr>
+            <tr><td>Analysis</td><td>none</td><td>Claude Opus 5.5 agents with tools</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+
+    <h2 id="cost">Cost and time</h2>
+    <div class="figs">
+      <div class="fig-n"><b>&asymp; $11.75</b><span>API cost of the editor calls</span></div>
+      <div class="fig-n"><b>547,286</b><span>output tokens in the 10 logged calls</span></div>
+      <div class="fig-n"><b>4.7&ndash;14.1</b><span>minutes per reply</span></div>
+      <div class="fig-n"><b>&asymp; 1.5 h</b><span>from the first API call to the draft report</span></div>
+    </div>
+    <p>Claude used more output tokens than Astra in 8 of 9 attempts. Most of these tokens are thinking. The Seaquest replies used 71.7k to 80.4k tokens each.</p>
+    <figure>
+      <div class="chart" id="tokens" role="img" aria-label="Output tokens per reply. Breakout: Claude 37.5k, 53.8k, 42.9k; Astra 20.6k. Asterix: Claude 28.8k, 45.0k, 43.7k; Astra 29.0k. Seaquest: Claude 71.7k, 79.4k, 80.4k; Astra 23.9k. A dashed line marks the first 64k cap."></div>
+      <figcaption><b>Figure 5.</b> Output tokens per reply, thinking included. The first Seaquest reply at a 64k cap used all its tokens for thinking and returned no network. We then ran all three Seaquest attempts at a 128k cap.<span class="src">Data: <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/runs/cost.json">runs/cost.json</a></span></figcaption>
+    </figure>
+    <ul class="plain">
+      <li><b>Editor calls.</b> The 10 logged calls cost $11.15: 50,295 input tokens and 547,286 output tokens at $4 and $20 per million. A stopped Seaquest call returned no usage. We estimate it at $0.60.</li>
+      <li><b>Agent workflows.</b> The analysis, audit and fact-check workflows used 86 agents and about 9M tokens. They ran in Claude Code and are not in the $11.75.</li>
+      <li><b>Local work.</b> Scoring, GIFs and Act 2 ran on the Mac mini at no cost. Act 2 ran in parallel for 67 minutes.</li>
+    </ul>
+
+    <h2 id="limits">Limits of this replication</h2>
+    <ul class="plain">
+      <li><b>Small sample.</b> We have three replies per game. The data cannot tell how often Claude finds each plan.</li>
+      <li><b>One effort level.</b> Claude ran at effort <code>high</code>, one level below the paper's <code>xhigh</code>.</li>
+      <li><b>Patches by agents with tools.</b> All patches and counterfactuals came from analysis agents with a simulator and Astra's network. They measure how much a mechanism matters. They do not measure what Claude writes in one reply.</li>
+      <li><b>Seeds.</b> Most mechanism counts use seeds 0 to 199. Only the headline scores use all 1,000 episodes.</li>
+      <li><b>Single source.</b> The original paper is a blog post. It is not peer reviewed. Astra's numbers come from its logs.</li>
+    </ul>
+
+    <h2 id="next">What comes next?</h2>
+    <p>Three tests can answer the open questions. First, run many more replies per game, to measure how often Claude finds each plan. Second, run Claude at effort <code>xhigh</code> and <code>max</code>, to match the paper's setting. Third, run the same prompts on other frontier models. If more models pass the PPO-100M bar, the evidence becomes stronger that weight-space programming is a general skill of frontier models.</p>
+
+    <section class="appendix">
+      <h3>Code, data and logs</h3>
+      <p>All code, replies, thinking summaries, networks, scores and agent outputs are at <a href="https://github.com/dhaneshnm/wsp-replication">github.com/dhaneshnm/wsp-replication</a>. Start with <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/RESULTS.md">RESULTS.md</a>. The original logs are at <a href="https://github.com/RikiyaT/lm_understand-logs">github.com/RikiyaT/lm_understand-logs</a> (CC BY 4.0).</p>
+      <h3>Writing style</h3>
+      <p>This report follows the rules of ASD-STE100 Simplified Technical English where possible: short sentences, active voice, simple tenses and one topic per sentence.</p>
+      <h3>Acknowledgements</h3>
+      <p>Thanks to Rikiya Takehi, Jayden Teoh, Alex Zhang and Omar Khattab for the post and for the public logs. Without the logs, this replication was not possible. The games come from MinAtar by Kenny Young and Tian Tian (GPL-3.0). The math problem comes from MATH-500 (MIT).</p>
+      <h3>License</h3>
+      <p>The code and results of this replication are under the MIT License. Third-party material keeps its own license. See <a href="https://github.com/dhaneshnm/wsp-replication/blob/main/NOTICE.md">NOTICE.md</a>.</p>
+      <h3>Original work</h3>
+<pre>Takehi, R., Teoh, J., Zhang, A., and Khattab, O. (2026).
+Sparks of Weight-Space Programming: LLMs can natively read
+and write neural network weights. Blog post, MIT CSAIL.
+https://rikiyat.github.io/blog/weight-space-programming/</pre>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  /* ---------- Teaser tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#teaser .tab'));
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+      if (j === null) return;
+      var n = tabs[(j + tabs.length) % tabs.length];
+      select(n); n.focus(); e.preventDefault();
+    });
+  });
+
+  /* ---------- Charts (drawn to the container's width, so text stays at real size) ---------- */
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, text) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function fmt(v) { return v >= 100 ? v.toFixed(1) : v.toFixed(1); }
+
+  var GAMES = [
+    { name: 'Breakout', max: 550, step: 100, ppo100: 15.8, ppo500: 25.3, astra: 517.4, claude: [30.0, 449.7, 261.5] },
+    { name: 'Seaquest', max: 95, step: 20, ppo100: 5.6, ppo500: 88.9, astra: 53.1, claude: [7.41, 7.45, 51.69] },
+    { name: 'Asterix', max: 60, step: 10, ppo100: 25.8, ppo500: 55.2, astra: 53.2, claude: [33.0, 23.4, 45.6] }
+  ];
+
+  function drawStrip(host) {
+    var W = Math.max(300, host.clientWidth || 720);
+    var L = W < 480 ? 58 : 72, R = 14, ROW = 116, TOP = 4;
+    var H = TOP + ROW * GAMES.length;
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H });
+    GAMES.forEach(function (g, gi) {
+      var y0 = TOP + gi * ROW;
+      var x = function (v) { return L + (v / g.max) * (W - L - R); };
+      var yRef = y0 + 40, yCl = y0 + 68, yAx = y0 + 94;
+      svg.appendChild(el('text', { x: 0, y: y0 + 16, class: 't-game' }, g.name));
+      svg.appendChild(el('text', { x: 0, y: yRef + 4, class: 't-lane' }, 'Reference'));
+      svg.appendChild(el('text', { x: 0, y: yCl + 4, class: 't-lane' }, 'Claude'));
+      for (var t = 0; t <= g.max; t += g.step) {
+        svg.appendChild(el('line', { x1: x(t), x2: x(t), y1: yRef - 12, y2: yAx, class: 'grid' }));
+        svg.appendChild(el('text', { x: x(t), y: yAx + 15, 'text-anchor': 'middle', class: 't-tick' }, String(t)));
+      }
+      svg.appendChild(el('line', { x1: L, x2: W - R, y1: yAx, y2: yAx, class: 'axis' }));
+      // Astra guide line down to the axis
+      svg.appendChild(el('line', { x1: x(g.astra), x2: x(g.astra), y1: yRef, y2: yAx, class: 'g-astra' }));
+      // PPO markers
+      svg.appendChild(el('rect', { x: x(g.ppo100) - 4.5, y: yRef - 4.5, width: 9, height: 9, class: 'm-ppo-100' }));
+      svg.appendChild(el('rect', { x: x(g.ppo500) - 4.5, y: yRef - 4.5, width: 9, height: 9, class: 'm-ppo-500' }));
+      // Astra diamond and label
+      var ax = x(g.astra);
+      svg.appendChild(el('path', { d: 'M' + ax + ' ' + (yRef - 7) + ' L' + (ax + 7) + ' ' + yRef + ' L' + ax + ' ' + (yRef + 7) + ' L' + (ax - 7) + ' ' + yRef + ' Z', class: 'm-astra' }));
+      var aLabel = 'Astra ' + fmt(g.astra);
+      var anchor = ax > W - 80 ? 'end' : 'middle';
+      svg.appendChild(el('text', { x: anchor === 'end' ? Math.min(ax + 7, W - R) : ax, y: yRef - 13, 'text-anchor': anchor, class: 't-astra' }, aLabel));
+      // Claude dots, grouped where they overlap
+      var pts = g.claude.map(function (v, i) { return { v: v, i: i + 1, x: x(v) }; }).sort(function (a, b) { return a.x - b.x; });
+      var groups = [];
+      pts.forEach(function (p) {
+        var last = groups[groups.length - 1];
+        if (last && p.x - last[last.length - 1].x < 18) last.push(p); else groups.push([p]);
+      });
+      groups.forEach(function (grp) {
+        grp.forEach(function (p) { svg.appendChild(el('circle', { cx: p.x, cy: yCl, r: 6.5, class: 'm-claude' })); });
+        var cx = grp.reduce(function (s, p) { return s + p.x; }, 0) / grp.length;
+        var lbl = grp.map(function (p) { return '#' + p.i; }).join(' ');
+        var vals = grp.map(function (p) { return fmt(p.v); }).join(', ');
+        var a2 = cx > W - 60 ? 'end' : (cx < L + 30 ? 'start' : 'middle');
+        var tx = a2 === 'end' ? Math.min(cx + 6, W - R) : (a2 === 'start' ? cx - 6 : cx);
+        var txt = el('text', { x: tx, y: yCl - 12, 'text-anchor': a2, class: 't-claude' }, lbl);
+        svg.appendChild(txt);
+        var title = el('title', {}, 'Claude ' + lbl + ': ' + vals);
+        txt.appendChild(title);
+      });
+    });
+    host.replaceChildren(svg);
+  }
+
+  var TOK = [
+    { name: 'Breakout', claude: [37.5, 53.8, 42.9], astra: 20.6 },
+    { name: 'Asterix', claude: [28.8, 45.0, 43.7], astra: 29.0 },
+    { name: 'Seaquest', claude: [71.7, 79.4, 80.4], astra: 23.9 }
+  ];
+  function drawTokens(host) {
+    var W = Math.max(300, host.clientWidth || 720);
+    var L = W < 480 ? 74 : 92, R = 46, BAR = 13, GAP = 4, GROUP = 4 * (BAR + GAP) + 30, TOP = 22, MAX = 90;
+    var H = TOP + GROUP * TOK.length + 20;
+    var x = function (v) { return L + (v / MAX) * (W - L - R); };
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H });
+    for (var t = 0; t <= MAX; t += 20) {
+      svg.appendChild(el('line', { x1: x(t), x2: x(t), y1: TOP - 6, y2: H - 18, class: 'grid' }));
+      svg.appendChild(el('text', { x: x(t), y: H - 3, 'text-anchor': 'middle', class: 't-tick' }, t + 'k'));
+    }
+    svg.appendChild(el('line', { x1: x(64), x2: x(64), y1: TOP - 10, y2: H - 18, class: 'cap' }));
+    svg.appendChild(el('text', { x: x(64) + 4, y: TOP - 10, class: 't-cap' }, 'first cap, 64k'));
+    TOK.forEach(function (g, gi) {
+      var y0 = TOP + gi * GROUP + 8;
+      svg.appendChild(el('text', { x: 0, y: y0 + 4, class: 't-game' }, g.name));
+      var rows = g.claude.map(function (v, i) { return { label: 'Claude #' + (i + 1), v: v, cls: 'b-claude', tcls: 't-claude' }; });
+      rows.push({ label: 'Astra', v: g.astra, cls: 'b-astra', tcls: 't-astra' });
+      rows.forEach(function (r, ri) {
+        var y = y0 + 12 + ri * (BAR + GAP);
+        svg.appendChild(el('text', { x: L - 8, y: y + BAR - 2.5, 'text-anchor': 'end', class: r.tcls }, r.label));
+        svg.appendChild(el('rect', { x: L, y: y, width: Math.max(1, x(r.v) - L), height: BAR, rx: 2, class: r.cls }));
+        svg.appendChild(el('text', { x: x(r.v) + 5, y: y + BAR - 2.5, class: 't-val' }, r.v.toFixed(1) + 'k'));
+      });
+    });
+    host.replaceChildren(svg);
+  }
+
+  var strip = document.getElementById('strip');
+  var tokens = document.getElementById('tokens');
+  function drawAll() { drawStrip(strip); drawTokens(tokens); }
+  drawAll();
+  var lastW = strip.clientWidth, timer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      if (strip.clientWidth !== lastW) { lastW = strip.clientWidth; drawAll(); }
+    }, 120);
+  });
+})();
+</script>
+</body>
+</html>

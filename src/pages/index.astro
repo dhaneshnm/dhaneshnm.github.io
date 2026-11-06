@@ -1,5 +1,10 @@
 ---
 import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { reports, reportUrl, longDate } from "../data/reports";
+
+const latest = reports[0];
 
 const linkedin = "https://www.linkedin.com/in/dhanesh-neela-mana-ab63a01a/";
 const x = "https://x.com/dneelamana";
@@ -26,18 +31,7 @@ const work = [
 ---
 
 <Base>
-  <header>
-    <div class="wrap header-inner">
-      <a class="name" href="/">Dhanesh Neela Mana</a>
-      <nav aria-label="Site">
-        <ul>
-          <li><a href="#now">Now</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#follow">Follow</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
   <main>
     <section class="wrap grid hero">
@@ -103,6 +97,17 @@ const work = [
       </div>
     </section>
 
+    <section class="wrap grid row" id="reports">
+      <h2>Reports</h2>
+      <div>
+        <p>
+          <b><a href={reportUrl(latest)}>{latest.title}</a></b>{" "}
+          {latest.summary} {longDate(latest.date)}.
+        </p>
+        <p><a href="/reports/">All reports</a></p>
+      </div>
+    </section>
+
     <section class="wrap grid row" id="work">
       <h2>Work</h2>
       <table>
@@ -131,10 +136,5 @@ const work = [
     </section>
   </main>
 
-  <footer>
-    <div class="wrap footer-inner">
-      <span>Dhanesh Neela Mana, 2026</span>
-      <span>College Station, Texas</span>
-    </div>
-  </footer>
+  <Footer />
 </Base>

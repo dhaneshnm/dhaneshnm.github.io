@@ -1,0 +1,75 @@
+---
+import Base from "../../layouts/Base.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { reports, reportUrl, shortDate } from "../../data/reports";
+
+// Group by year, newest year first. `reports` is already newest first.
+const years: [string, typeof reports][] = [];
+for (const r of reports) {
+  const y = r.date.slice(0, 4);
+  const last = years[years.length - 1];
+  if (last && last[0] === y) last[1].push(r);
+  else years.push([y, [r]]);
+}
+---
+
+<Base
+  title="Reports · Dhanesh Neela Mana"
+  description="Write-ups of experiments that Dhanesh Neela Mana runs with AI models. Each report links to its code and data."
+  path="/reports/"
+>
+  <Header />
+
+  <main>
+    <section class="wrap grid page-head">
+      <div class="hero-text">
+        <h1>Reports</h1>
+        <p>
+          Write-ups of experiments that I run with AI models. Each report links
+          to its code and data, so you can check every number.
+        </p>
+      </div>
+    </section>
+
+    {
+      years.map(([year, items]) => (
+        <section class="wrap grid row">
+          <h2>{year}</h2>
+          <table>
+            {items.map((r) => (
+              <tr>
+                <td>{shortDate(r.date)}</td>
+                <td>
+                  <b>
+                    <a href={reportUrl(r)}>{r.title}</a>
+                  </b>{" "}
+                  {r.summary}
+                  <span class="meta">{r.meta}</span>
+                </td>
+              </tr>
+            ))}
+          </table>
+          {items[0].note && (
+            <div class="margin">
+              <div class="cap">
+                <svg width="30" height="22" viewBox="0 0 30 22" aria-hidden="true">
+                  <path
+                    d="M28 18 C 20 19, 10 15, 4 8 M4 8 L5 15 M4 8 L11 8"
+                    fill="none"
+                    stroke="var(--red)"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span>{items[0].note}</span>
+              </div>
+            </div>
+          )}
+        </section>
+      ))
+    }
+  </main>
+
+  <Footer />
+</Base>

@@ -1,9 +1,16 @@
 ---
-const title = "Dhanesh Neela Mana · Building for how people learn";
-const description =
-  "Eighteen years shipping software, most recently as CTO of an ed-tech startup. Now building apps that help people learn. College Station, Texas.";
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string; // site path of this page, e.g. "/reports/"
+}
+const {
+  title = "Dhanesh Neela Mana · Building for how people learn",
+  description = "Eighteen years shipping software, most recently as CTO of an ed-tech startup. Now building apps that help people learn. College Station, Texas.",
+  path = "/",
+} = Astro.props;
 const ogDescription = description;
-const canonical = "https://dneelamana.com/";
+const canonical = new URL(path, "https://dneelamana.com").href;
 ---
 
 <!DOCTYPE html>
@@ -228,6 +235,24 @@ const canonical = "https://dneelamana.com/";
       td b {
         font-weight: 600;
       }
+      td .meta {
+        display: block;
+        margin-top: 4px;
+        color: var(--pencil);
+        font-size: 0.88rem;
+      }
+
+      /* ---------- Page heading (pages other than the home page) ---------- */
+      .page-head {
+        padding-top: 64px;
+        padding-bottom: 40px;
+      }
+      .page-head h1 {
+        margin-bottom: 18px;
+      }
+      .page-head p {
+        max-width: 34em;
+      }
 
       /* ---------- Footer ---------- */
       footer {
@@ -256,7 +281,8 @@ const canonical = "https://dneelamana.com/";
         .hero-text {
           grid-column: auto;
         }
-        .hero {
+        .hero,
+        .page-head {
           padding-top: 40px;
           padding-bottom: 40px;
         }
